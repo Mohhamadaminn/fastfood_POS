@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
 class Product(models.Model):
@@ -15,10 +16,6 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.PositiveIntegerField(default=0)
 
-
-    def __str__(self):
-        return f"Order #{self.id}"
-    
     
     def update_total(self):
         total = 0
@@ -28,14 +25,29 @@ class Order(models.Model):
 
         self.total_price = total
         self.save()
-    
+
+
+
+    def __str__(self):
+        return f"Order #{self.id}"
+       
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    quantity = models.IntegerField(default=1)
+    quantity = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)]
+    )
     unit_price = models.PositiveIntegerField()
+
+
+    @property
+    def subtotal(self):
+        return self.quantity * self.unit_price
+    
 
 
     def __str__(self):
         return f"{self.product.name}"
+    
