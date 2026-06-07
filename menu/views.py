@@ -1,32 +1,31 @@
-from django.shortcuts import render
-from . import models
-from django.views import View, generic
-from .models import Product, Order, OrderItem
+from django.shortcuts import redirect
+from django.views import View
+from django.views.generic import DetailView
+
+from menu.forms import AddItemForm
+
+from .models import Order, OrderItem
 
 
-
-class OrderShowView(generic.DetailView):
-    model = Order
-    template_name = "home.html"
-    context_object_name = "order"
-
-
-class NewOrderView(View):
-
+class OrderCreateView(View):
+    
     def get(self, request):
 
-        products = Product.objects.filter(is_active = True)
+        order = Order.objects.create()
 
-        return render(
-            request,
-            'menu/new-order.html',
-            {'products': products},
-        )
+        return redirect('order-detail', pk=order.pk)
     
-    def post(self, request):
-        products = Product.objects.filter(is_active=True)
 
-        for product in products:
-            quantity = request.POST.get(
-                f"product_{product.id}"
-            )
+class OrderDetailView(DetailView):
+
+    model = Order 
+    template_name = 'menu/order-detail.html'
+    context_object_name = 'order'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = AddItemForm() 
+        return context
+        
+
+
