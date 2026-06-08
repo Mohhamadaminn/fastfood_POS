@@ -4,7 +4,7 @@ from django.views.generic import DetailView
 
 from menu.forms import AddItemForm
 from .forms import AddItemForm
-from .models import Order, OrderItem
+from .models import Product, Order, OrderItem
 
 
 
@@ -25,6 +25,9 @@ class OrderDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["products"] = Product.objects.filter(
+            is_active=True
+        )
         context["form"] = AddItemForm() 
         return context
 
@@ -40,6 +43,7 @@ class AddItemView(View):
 
         if form.is_valid():
 
+            # using cleaned_data help us to give correct values to our objects.
             product = form.cleaned_data['product']
             quantity = form.cleaned_data['quantity']
 
