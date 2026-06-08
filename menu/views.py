@@ -1,10 +1,11 @@
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import DetailView
 
 from menu.forms import AddItemForm
-
+from .forms import AddItemForm
 from .models import Order, OrderItem
+
 
 
 class OrderCreateView(View):
@@ -26,6 +27,31 @@ class OrderDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["form"] = AddItemForm() 
         return context
-        
+
+
+
+class AddItemView(View):
+
+    def post(self, request, pk):
+
+        order = get_object_or_404(Order, pk=pk)
+
+        form = AddItemForm(request.POST)
+
+        if form.is_valid():
+
+            product = form.cleaned_data['product']
+            quantity = form.cleaned_data['quantity']
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=quantity,
+                unit_price=product.price,
+            )
+
+            order.update_total()
+
+        return redirect('order-detail', pk=order.pk)
 
 

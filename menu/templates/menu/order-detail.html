@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h2>Order #{{ order.id }}</h2>
+
+<p>Total Price: {{ order.total_price }}</p>
+
+<hr>
+
+<h3>Items</h3>
+
+{% for item in order.items.all %}
+
+    <p>
+        {{ item.product.name }}
+        |
+        Qty: {{ item.quantity }}
+        |
+        Subtotal: {{ item.subtotal }}
+    </p>
+
+{% empty %}
+
+    <p>No items yet.</p>
+
+{% endfor %}
+
+<hr>
+
+<form
+    method="post"
+    action="{% url 'add-item' order.id %}"
+>
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Add Item
+    </button>
+
+</form>
+</body>
+</html>
