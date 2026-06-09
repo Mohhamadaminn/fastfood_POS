@@ -6,6 +6,7 @@ class Product(models.Model):
     name = models.CharField(max_length=55)
     price = models.PositiveIntegerField()
     is_active = models.BooleanField(default=True)
+    image = models.ImageField()
 
 
     def __str__(self):

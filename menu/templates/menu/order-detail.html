@@ -1,5 +1,7 @@
 {% extends "_base.html" %}
 
+{% load static %}
+
 {% block title %}POS{% endblock title %}
 
 {% block content %}
@@ -32,6 +34,7 @@
                         <div
                             class="card product-card h-100"
                             onclick="addProduct(
+                                '{{ product.image }}'
                                 '{{ product.id }}',
                                 '{{ product.name }}',
                                 '{{ product.price }}'
