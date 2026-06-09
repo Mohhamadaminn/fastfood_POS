@@ -47,15 +47,96 @@ class AddItemView(View):
             product = form.cleaned_data['product']
             quantity = form.cleaned_data['quantity']
 
-            OrderItem.objects.create(
+            item = OrderItem.objects.filter(
+                order=order,
+                product=product,
+            ).first()
+
+            if item:
+                quantity += quantity
+
+                item.save()
+
+            else:
+
+                OrderItem.objects.create(
                 order=order,
                 product=product,
                 quantity=quantity,
                 unit_price=product.price,
             )
 
-            order.update_total()
+            order.update_total_price()
 
         return redirect('order-detail', pk=order.pk)
 
 
+
+
+class IncreaseQuantityView(View):
+
+    def post(self, request, pk):
+
+        item = get_object_or_404(
+            OrderItem,
+            pk=pk
+        )
+
+        item.quantity += 1
+
+        item.save()
+
+        item.order.update_total_price()
+
+        return redirect(
+            "order-detail",
+            pk=item.order.id
+        )
+    
+
+class DecreaseQuantityView(View):
+
+    def post(self, request, pk):
+
+        item = get_object_or_404(
+            OrderItem,
+            pk=pk
+        )
+
+        if item.quantity > 1:
+
+            item.quantity -= 1
+
+            item.save()
+
+        else:
+
+            item.delete()
+
+        item.order.update_total_price()
+
+        return redirect(
+            "order-detail",
+            pk=item.order.id
+        )
+    
+
+class DeleteItemView(View):
+
+    def post(self, request, pk):
+
+        item = get_object_or_404(
+            OrderItem,
+            pk=pk
+        )
+
+        order = item.order
+
+        item.delete()
+
+        order.update_total_price()
+
+        return redirect(
+            "order-detail",
+            pk=order.id
+        )
