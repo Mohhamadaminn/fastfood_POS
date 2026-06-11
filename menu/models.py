@@ -15,15 +15,15 @@ class Product(models.Model):
 
 class Order(models.Model):
 
- #   STATUS_CHOICES=[
- #       ('open', 'open'),
- #       ('paid', 'paid'),
- #   ]
+    STATUS_CHOICES=[
+        ('open', 'open'),
+        ('paid', 'paid'),
+    ]
 
 
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.PositiveIntegerField(default=0)
- #   status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=1)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='open')
 
     
     def update_total_price(self):
