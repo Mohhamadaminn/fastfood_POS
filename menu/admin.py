@@ -1,22 +1,32 @@
 from django.contrib import admin
-from . import models
+from .models import(
+    Product,
+    Order,
+    OrderItem,
+)
 
-
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(models.Product, ProductAdmin)
-
+@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    
+    list_display = (
+        'id', 
+        'created_at',
+        'status',
+        'total_price',
+    )
+
+    list_filter = (
+        'status',
+    )
 
 
-admin.site.register(models.Order, OrderAdmin)
 
-
+@admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
     pass
 
-
-admin.site.register(models.OrderItem, OrderItemAdmin)
