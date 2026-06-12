@@ -6,6 +6,8 @@ from .views import (
     IncreaseQuantityView,
     DecreaseQuantityView,
     DeleteItemView,
+    CompleteOrderView,
+    PaymentSuccessView,
 )
 
 
@@ -16,5 +18,6 @@ urlpatterns = [
     path('item/<int:pk>/increase/', IncreaseQuantityView.as_view(), name='increase-item'),
     path('item/<int:pk>/decrease/', DecreaseQuantityView.as_view(), name='decrease-item'),
     path('item/<int:pk>/delete/', DeleteItemView.as_view(), name='delete-item'),
-
+    path('orders/<int:pk>/complete/', CompleteOrderView.as_view(), name='complete-order'),
+    path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
 ]
