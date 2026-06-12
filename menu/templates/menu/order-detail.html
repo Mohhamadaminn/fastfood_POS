@@ -1,4 +1,7 @@
 {% extends "_base.html" %}
+
+{% load i18n %}
+
 {% load humanize %}
 {% block content %}
 <div class="row g-4">
@@ -92,7 +95,7 @@
                         <tr>
                             <th>Item</th>
                             <th class="text-center">Qty</th>
-                            <th class="text-end">Total</th>
+                            <th class="text-end">{% trans "Total" %}</th>
                             <th class="text-center"></th>
                         </tr>
                     </thead>
