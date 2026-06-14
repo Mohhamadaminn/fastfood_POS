@@ -8,6 +8,7 @@ from .views import (
     DeleteItemView,
     CompleteOrderView,
     PaymentSuccessView,
+    DashboardView,
 )
 
 
@@ -20,4 +21,5 @@ urlpatterns = [
     path('item/<int:pk>/delete/', DeleteItemView.as_view(), name='delete-item'),
     path('orders/<int:pk>/complete/', CompleteOrderView.as_view(), name='complete-order'),
     path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
 ]

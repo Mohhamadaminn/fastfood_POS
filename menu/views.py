@@ -1,6 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import DetailView
+from django.views.generic import TemplateView
+from django.db.models import Sum, Avg
+
+from datetime import date
+
+
 
 from .models import Product, Order, OrderItem
 from .forms import AddItemForm
@@ -107,3 +113,57 @@ class CompleteOrderView(View):
 class PaymentSuccessView(View):
     def get(self, request):
         return render(request, 'menu/payment-success.html')
+    
+
+
+class DashboardView(TemplateView):
+
+    template_name = "menu/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        today = date.today()
+
+        paid_orders = Order.objects.filter(
+            status="paid",
+            created_at__date=today
+        )
+
+        total_sales = (
+            paid_orders.aggregate(
+                total=Sum("total_price")
+            )["total"]
+            or 0
+        )
+
+        total_orders = paid_orders.count()
+
+        average_order = (
+            paid_orders.aggregate(
+                avg=Avg("total_price")
+            )["avg"]
+            or 0
+        )
+
+        best_seller = (
+            Product.objects
+            .filter(
+                orderitem__order__status="paid",
+                orderitem__order__created_at__date=today,
+            )
+            .annotate(
+                total_sold=Sum("orderitem__quantity")
+            )
+            .order_by("-total_sold")
+            .first()
+        )
+
+
+        context["total_sales"] = total_sales
+        context["total_orders"] = total_orders
+        context["average_order"] = average_order
+        context["best_seller"] = best_seller
+
+        return context
