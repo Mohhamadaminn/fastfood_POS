@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.views.generic import DetailView
+from django.views.generic import ListView, DetailView
 from django.views.generic import TemplateView
 from django.db.models import Sum, Avg
 
@@ -10,6 +10,19 @@ from datetime import date
 
 from .models import Product, Order, OrderItem
 from .forms import AddItemForm
+
+
+class OrderListView(ListView):
+
+    model = Order
+
+    template_name = "menu/order-list.html"
+
+    context_object_name = "orders"
+
+    ordering = ["-created_at"]
+
+    paginate_by = 20
 
 
 class OrderCreateView(View):

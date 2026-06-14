@@ -9,6 +9,7 @@ from .views import (
     CompleteOrderView,
     PaymentSuccessView,
     DashboardView,
+    OrderListView,
 )
 
 
@@ -22,4 +23,5 @@ urlpatterns = [
     path('orders/<int:pk>/complete/', CompleteOrderView.as_view(), name='complete-order'),
     path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('orders/', OrderListView.as_view(), name='order-list')
 ]

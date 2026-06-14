@@ -1,0 +1,149 @@
+{% extends "_base.html" %}
+{% load humanize %}
+
+{% block title %}
+Orders
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header">
+
+        <h3 class="mb-0">
+
+            <i class="bi bi-clock-history"
+               style="color: var(--primary-red);"></i>
+
+            Order History
+
+        </h3>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Status</th>
+
+                    <th>Total</th>
+
+                    <th>Date</th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for order in orders %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>
+
+                            #{{ order.id }}
+
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        {% if order.status == "paid" %}
+
+                        <span
+                            class="badge"
+                            style="
+                                background:#112818;
+                                color:#4ade80;
+                            "
+                        >
+
+                            Paid
+
+                        </span>
+
+                        {% else %}
+
+                        <span
+                            class="badge"
+                            style="
+                                background:#332200;
+                                color:#facc15;
+                            "
+                        >
+
+                            Open
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {{ order.total_price|intcomma }}
+
+                    </td>
+
+                    <td>
+
+                        {{ order.created_at }}
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{% url 'order-detail' order.id %}"
+                            class="btn btn-sm btn-outline-danger"
+                        >
+
+                            View
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="text-center py-5"
+                    >
+
+                        No orders found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
