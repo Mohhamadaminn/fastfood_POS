@@ -1,14 +1,15 @@
 {% extends "_base.html" %}
 {% load humanize %}
+{% load i18n %}
 
 {% block title %}
-Dashboard
+{% trans "Dashboard" %}
 {% endblock %}
 
 {% block content %}
 
 <h1 class="mb-4 fw-bold">
-    Dashboard
+    {% trans "Dashboard" %}
 </h1>
 
 <div class="row g-4">
@@ -17,7 +18,7 @@ Dashboard
         <div class="card shadow">
             <div class="card-body">
                 <h6 class="text-muted">
-                    Today's Revenue
+                    {% trans "Today's Revenue" %}
                 </h6>
 
                 <h2 class="text-success">
@@ -31,7 +32,7 @@ Dashboard
         <div class="card shadow">
             <div class="card-body">
                 <h6 class="text-muted">
-                    Orders Today
+                    {% trans "Orders Today" %}
                 </h6>
 
                 <h2>
@@ -45,7 +46,7 @@ Dashboard
         <div class="card shadow">
             <div class="card-body">
                 <h6 class="text-muted">
-                    Average Order
+                    {% trans "Average Order" %}
                 </h6>
 
                 <h2>
@@ -59,7 +60,7 @@ Dashboard
         <div class="card shadow">
             <div class="card-body">
                 <h6 class="text-muted">
-                    Open Orders
+                    {% trans "Open Orders" %}
                 </h6>
 
                 <h2>
@@ -81,7 +82,7 @@ Dashboard
 
                 <h5 class="mb-0">
 
-                    Best Seller Today
+                    {% trans "Best Seller Today" %}
 
                 </h5>
 
@@ -105,7 +106,7 @@ Dashboard
 
                     <p>
 
-                        No sales today
+                        {% trans "No sales today" %}
 
                     </p>
 
@@ -125,7 +126,7 @@ Dashboard
 
                 <h5 class="mb-0">
 
-                    Overall Statistics
+                    {% trans "Overall Statistics" %}
 
                 </h5>
 
@@ -135,7 +136,7 @@ Dashboard
 
                 <p>
 
-                    Total Revenue:
+                    {% trans "Total Revenue:" %}
 
                     <strong>
 
@@ -147,7 +148,7 @@ Dashboard
 
                 <p>
 
-                    Paid Orders:
+                    {% trans "Paid Orders:" %}
 
                     <strong>
 
@@ -175,7 +176,7 @@ Dashboard
 
                 <h5 class="mb-0">
 
-                    Recent Orders
+                    {% trans "Recent Orders" %}
 
                 </h5>
 
@@ -189,13 +190,13 @@ Dashboard
 
                         <tr>
 
-                            <th>ID</th>
+                            <th>{% trans "ID" %}</th>
 
-                            <th>Status</th>
+                            <th>{% trans "Status" %}</th>
 
-                            <th>Total</th>
+                            <th>{% trans "Total" %}</th>
 
-                            <th>Date</th>
+                            <th>{% trans "Date" %}</th>
 
                         </tr>
 
@@ -225,7 +226,7 @@ Dashboard
                                         "
                                     >
 
-                                        Paid
+                                        {% trans "Paid" %}
 
                                     </span>
 
@@ -239,7 +240,7 @@ Dashboard
                                         "
                                     >
 
-                                        Open
+                                        {% trans "Open" %}
 
                                     </span>
 

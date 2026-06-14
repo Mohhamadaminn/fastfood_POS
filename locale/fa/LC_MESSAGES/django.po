@@ -1,0 +1,210 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Burger POS\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-15 00:01+0330\n"
+"PO-Revision-Date: 2026-06-15 00:00+0330\n"
+"Last-Translator: Your Name <your@email.com>\n"
+"Language-Team: Persian\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: menu/templates/menu/dashboard.html:6 menu/templates/menu/dashboard.html:12
+#: templates/_base.html:114 templates/home.html:37
+msgid "Dashboard"
+msgstr "داشبورد"
+
+#: menu/templates/menu/dashboard.html:21 templates/home.html:64
+msgid "Today's Revenue"
+msgstr "درآمد امروز"
+
+#: menu/templates/menu/dashboard.html:35 templates/home.html:83
+msgid "Orders Today"
+msgstr "سفارش‌های امروز"
+
+#: menu/templates/menu/dashboard.html:49
+msgid "Average Order"
+msgstr "میانگین سفارش"
+
+#: menu/templates/menu/dashboard.html:63
+msgid "Open Orders"
+msgstr "سفارش‌های باز"
+
+#: menu/templates/menu/dashboard.html:85
+msgid "Best Seller Today"
+msgstr "پرفروش‌ترین محصول امروز"
+
+#: menu/templates/menu/dashboard.html:109
+msgid "No sales today"
+msgstr "امروز فروشی ثبت نشده است"
+
+#: menu/templates/menu/dashboard.html:129
+msgid "Overall Statistics"
+msgstr "آمار کلی"
+
+#: menu/templates/menu/dashboard.html:139
+msgid "Total Revenue:"
+msgstr "مجموع درآمد:"
+
+#: menu/templates/menu/dashboard.html:151
+msgid "Paid Orders:"
+msgstr "سفارش‌های پرداخت‌شده:"
+
+#: menu/templates/menu/dashboard.html:179
+msgid "Recent Orders"
+msgstr "سفارش‌های اخیر"
+
+#: menu/templates/menu/dashboard.html:193
+msgid "ID"
+msgstr "شناسه"
+
+#: menu/templates/menu/dashboard.html:195
+#: menu/templates/menu/order-list.html:22
+msgid "Status"
+msgstr "وضعیت"
+
+#: menu/templates/menu/dashboard.html:197
+#: menu/templates/menu/order-detail.html:98
+#: menu/templates/menu/order-detail.html:154
+#: menu/templates/menu/order-list.html:23
+msgid "Total"
+msgstr "مبلغ کل"
+
+#: menu/templates/menu/dashboard.html:199
+#: menu/templates/menu/order-list.html:24
+msgid "Date"
+msgstr "تاریخ"
+
+#: menu/templates/menu/dashboard.html:229
+#: menu/templates/menu/order-detail.html:87
+#: menu/templates/menu/order-list.html:37
+msgid "Paid"
+msgstr "پرداخت‌شده"
+
+#: menu/templates/menu/dashboard.html:243
+#: menu/templates/menu/order-detail.html:73
+#: menu/templates/menu/order-list.html:41
+msgid "Open"
+msgstr "باز"
+
+#: menu/templates/menu/order-detail.html:14
+msgid "Products"
+msgstr "محصولات"
+
+#: menu/templates/menu/order-detail.html:44
+#: menu/templates/menu/order-detail.html:191 templates/home.html:67
+msgid "Toman"
+msgstr "تومان"
+
+#: menu/templates/menu/order-detail.html:61
+#, python-format
+msgid "Order #%(id)s"
+msgstr "سفارش شماره %(id)s"
+
+#: menu/templates/menu/order-detail.html:96
+msgid "Item"
+msgstr "آیتم"
+
+#: menu/templates/menu/order-detail.html:97
+msgid "Qty"
+msgstr "تعداد"
+
+#: menu/templates/menu/order-detail.html:144
+msgid "No items added yet"
+msgstr "هنوز آیتمی اضافه نشده است"
+
+#: menu/templates/menu/order-detail.html:171
+msgid "Complete Payment"
+msgstr "تکمیل پرداخت"
+
+#: menu/templates/menu/order-detail.html:186
+msgid "Order Paid"
+msgstr "سفارش پرداخت شد"
+
+#: menu/templates/menu/order-list.html:6 templates/_base.html:117
+#: templates/home.html:48
+msgid "Orders"
+msgstr "سفارش‌ها"
+
+#: menu/templates/menu/order-list.html:14
+msgid "Order History"
+msgstr "تاریخچه سفارش‌ها"
+
+#: menu/templates/menu/order-list.html:49
+msgid "View"
+msgstr "مشاهده"
+
+#: menu/templates/menu/order-list.html:56
+msgid "No orders found."
+msgstr "هیچ سفارشی یافت نشد."
+
+#: menu/templates/menu/payment-success.html:5
+#: menu/templates/menu/payment-success.html:23
+msgid "Payment Successful"
+msgstr "پرداخت موفق"
+
+#: menu/templates/menu/payment-success.html:26
+#, python-format
+msgid ""
+"\n"
+" Order #%(order_id)s has been paid successfully.\n"
+" "
+msgstr ""
+"\n"
+" سفارش شماره %(order_id)s با موفقیت پرداخت شد.\n"
+" "
+
+#: menu/templates/menu/payment-success.html:32
+msgid "Create New Order"
+msgstr "ایجاد سفارش جدید"
+
+#: templates/_base.html:120
+msgid "Cashier"
+msgstr "صندوقدار"
+
+#: templates/home.html:5
+msgid "Home"
+msgstr "خانه"
+
+#: templates/home.html:11
+msgid "Welcome"
+msgstr "خوش آمدید"
+
+#: templates/home.html:13
+msgid "Point of Sale Management System"
+msgstr "سیستم مدیریت صندوق فروش"
+
+#: templates/home.html:23
+msgid "New Order"
+msgstr "سفارش جدید"
+
+#: templates/home.html:24
+msgid "Quick Start Sale"
+msgstr "شروع سریع فروش"
+
+#: templates/home.html:38
+msgid "Reports & Statistics"
+msgstr "گزارشات و آمار"
+
+#: templates/home.html:49
+msgid "Sales History"
+msgstr "تاریخچه فروش"
+
+#: templates/home.html:97
+msgid "Last updated"
+msgstr "آخرین به‌روزرسانی"
+
+#: templates/home.html:97
+msgid "Just now"
+msgstr "همین لحظه"
+
+#~ msgid "Burger POS"
+#~ msgstr "Burger POS"

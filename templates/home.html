@@ -1,204 +1,100 @@
 {% extends "_base.html" %}
 {% load humanize %}
+{% load i18n %}
 
-{% block title %}
-Burger POS
-{% endblock %}
+{% block title %}{% trans "Home" %} - Burger POS{% endblock %}
 
 {% block content %}
-
 <div class="row mb-4">
-
-    <div class="col-12">
-
-        <div class="card shadow">
-
-            <div class="card-body text-center py-5">
-
-                <h1 class="fw-bold">
-
-                    <i
-                        class="bi bi-shop"
-                        style="color: var(--primary-red);"
-                    ></i>
-
-                    Burger POS
-
-                </h1>
-
-                <p class="text-muted mt-3">
-
-                    Point of Sale Management System
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
+<div class="col-12 text-center">
+<h1 class="fw-bold text-white mb-1" style="font-size: 1.75rem;">
+<i class="bi bi-shop me-2" style="color: var(--primary-red);"></i>{% trans "Welcome" %}
+</h1>
+<p class="text-muted small mb-0">{% trans "Point of Sale Management System" %}</p>
+</div>
 </div>
 
 <div class="row g-4">
-
-    <div class="col-lg-4">
-
-        <a
-            href="{% url 'order-create' %}"
-            class="text-decoration-none"
-        >
-
-            <div
-                class="card h-100 shadow product-card"
-            >
-
-                <div class="card-body text-center p-5">
-
-                    <i
-                        class="bi bi-plus-circle-fill"
-                        style="
-                            font-size:60px;
-                            color:#4ade80;
-                        "
-                    ></i>
-
-                    <h3 class="mt-4">
-
-                        New Order
-
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </a>
-
-    </div>
-
-    <div class="col-lg-4">
-
-        <a
-            href="{% url 'dashboard' %}"
-            class="text-decoration-none"
-        >
-
-            <div
-                class="card h-100 shadow product-card"
-            >
-
-                <div class="card-body text-center p-5">
-
-                    <i
-                        class="bi bi-bar-chart-fill"
-                        style="
-                            font-size:60px;
-                            color:#e63939;
-                        "
-                    ></i>
-
-                    <h3 class="mt-4">
-
-                        Dashboard
-
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </a>
-
-    </div>
-
-    <div class="col-lg-4">
-
-        <a
-            href="{% url 'order-list' %}"
-            class="text-decoration-none"
-        >
-
-            <div
-                class="card h-100 shadow product-card"
-            >
-
-                <div class="card-body text-center p-5">
-
-                    <i
-                        class="bi bi-clock-history"
-                        style="
-                            font-size:60px;
-                            color:#60a5fa;
-                        "
-                    ></i>
-
-                    <h3 class="mt-4">
-
-                        Orders
-
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </a>
-
-    </div>
-
+<div class="col-lg-5">
+<a href="{% url 'order-create' %}" class="text-decoration-none">
+<div class="card h-100 product-card new-order-card shadow">
+<div class="card-body text-center d-flex flex-column justify-content-center p-5">
+<i class="bi bi-plus-circle-fill mb-3" style="font-size: 4.5rem; color: #4ade80;"></i>
+<h3 class="fw-bold mb-1">{% trans "New Order" %}</h3>
+<p class="text-muted small mb-0">{% trans "Quick Start Sale" %}</p>
+</div>
+</div>
+</a>
 </div>
 
-<div class="row g-4 mt-3">
-
-    <div class="col-md-6">
-
-        <div class="card shadow">
-
-            <div class="card-body">
-
-                <h6 class="text-muted">
-
-                    Today's Revenue
-
-                </h6>
-
-                <h2 class="text-success">
-
-                    {{ total_sales|intcomma }}
-
-                </h2>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-6">
-
-        <div class="card shadow">
-
-            <div class="card-body">
-
-                <h6 class="text-muted">
-
-                    Orders Today
-
-                </h6>
-
-                <h2>
-
-                    {{ total_orders }}
-
-                </h2>
-
-            </div>
-
-        </div>
-
-    </div>
-
+<div class="col-lg-7">
+<div class="row g-4 h-100">
+<div class="col-12 col-md-6">
+<a href="{% url 'dashboard' %}" class="text-decoration-none">
+<div class="card h-100 product-card shadow">
+<div class="card-body text-center d-flex flex-column justify-content-center p-5">
+<i class="bi bi-bar-chart-fill mb-3" style="font-size: 3.5rem; color: var(--primary-red);"></i>
+<h5 class="fw-bold mb-1">{% trans "Dashboard" %}</h5>
+<p class="text-muted small mb-0">{% trans "Reports & Statistics" %}</p>
+</div>
+</div>
+</a>
+</div>
+<div class="col-12 col-md-6">
+<a href="{% url 'order-list' %}" class="text-decoration-none">
+<div class="card h-100 product-card shadow">
+<div class="card-body text-center d-flex flex-column justify-content-center p-5">
+<i class="bi bi-clock-history mb-3" style="font-size: 3.5rem; color: #60a5fa;"></i>
+<h5 class="fw-bold mb-1">{% trans "Orders" %}</h5>
+<p class="text-muted small mb-0">{% trans "Sales History" %}</p>
+</div>
+</div>
+</a>
+</div>
+</div>
+</div>
 </div>
 
+<div class="row g-4 mt-2">
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-body py-4 px-4">
+<div class="d-flex justify-content-between align-items-center">
+<div>
+<p class="text-muted small mb-2">{% trans "Today's Revenue" %}</p>
+<h2 class="stat-number text-white mb-0">
+{{ total_sales|intcomma }}
+<small class="fs-6 fw-normal text-muted">{% trans "Toman" %}</small>
+</h2>
+</div>
+<div style="background: rgba(230,57,57,0.1); border-radius: 12px; padding: 14px;">
+<i class="bi bi-currency-dollar fs-2" style="color: var(--primary-red);"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-body py-4 px-4">
+<div class="d-flex justify-content-between align-items-center">
+<div>
+<p class="text-muted small mb-2">{% trans "Orders Today" %}</p>
+<h2 class="stat-number text-white mb-0">{{ total_orders }}</h2>
+</div>
+<div style="background: rgba(96,165,250,0.1); border-radius: 12px; padding: 14px;">
+<i class="bi bi-receipt fs-2" style="color: #60a5fa;"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="text-end mt-3">
+<small class="text-muted" style="font-size: 0.75rem;">
+{% trans "Last updated" %}: {% trans "Just now" %}
+</small>
+</div>
 {% endblock %}

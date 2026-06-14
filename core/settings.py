@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LOCALE_PATHS = [
-    BASE_DIR / 'menu/locale',
+    BASE_DIR / 'locale',
 ]
 
 
