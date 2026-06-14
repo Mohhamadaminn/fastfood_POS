@@ -109,17 +109,12 @@
                     w-100"
             >
 
-                <span class="navbar-brand">
+                <a
+                    href="{% url 'home' %}"
+                    class="navbar-brand text-decoration-none"
+                >
 
-                    <i class="bi bi-shop"></i>
-
-                    <span class="ms-2">Burger</span>
-
-                    <span style="color: var(--primary-red);">
-                        POS
-                    </span>
-
-                </span>
+                </a>
 
                 <a
                     href="{% url 'dashboard' %}"

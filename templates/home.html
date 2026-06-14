@@ -1,0 +1,204 @@
+{% extends "_base.html" %}
+{% load humanize %}
+
+{% block title %}
+Burger POS
+{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+
+    <div class="col-12">
+
+        <div class="card shadow">
+
+            <div class="card-body text-center py-5">
+
+                <h1 class="fw-bold">
+
+                    <i
+                        class="bi bi-shop"
+                        style="color: var(--primary-red);"
+                    ></i>
+
+                    Burger POS
+
+                </h1>
+
+                <p class="text-muted mt-3">
+
+                    Point of Sale Management System
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-4">
+
+    <div class="col-lg-4">
+
+        <a
+            href="{% url 'order-create' %}"
+            class="text-decoration-none"
+        >
+
+            <div
+                class="card h-100 shadow product-card"
+            >
+
+                <div class="card-body text-center p-5">
+
+                    <i
+                        class="bi bi-plus-circle-fill"
+                        style="
+                            font-size:60px;
+                            color:#4ade80;
+                        "
+                    ></i>
+
+                    <h3 class="mt-4">
+
+                        New Order
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="text-decoration-none"
+        >
+
+            <div
+                class="card h-100 shadow product-card"
+            >
+
+                <div class="card-body text-center p-5">
+
+                    <i
+                        class="bi bi-bar-chart-fill"
+                        style="
+                            font-size:60px;
+                            color:#e63939;
+                        "
+                    ></i>
+
+                    <h3 class="mt-4">
+
+                        Dashboard
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <a
+            href="{% url 'order-list' %}"
+            class="text-decoration-none"
+        >
+
+            <div
+                class="card h-100 shadow product-card"
+            >
+
+                <div class="card-body text-center p-5">
+
+                    <i
+                        class="bi bi-clock-history"
+                        style="
+                            font-size:60px;
+                            color:#60a5fa;
+                        "
+                    ></i>
+
+                    <h3 class="mt-4">
+
+                        Orders
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</div>
+
+<div class="row g-4 mt-3">
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Today's Revenue
+
+                </h6>
+
+                <h2 class="text-success">
+
+                    {{ total_sales|intcomma }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Orders Today
+
+                </h6>
+
+                <h2>
+
+                    {{ total_orders }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

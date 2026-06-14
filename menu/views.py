@@ -12,6 +12,37 @@ from .models import Product, Order, OrderItem
 from .forms import AddItemForm
 
 
+
+class HomeView(TemplateView):
+
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        today = date.today()
+
+        paid_orders = Order.objects.filter(
+            status="paid",
+            created_at__date=today
+        )
+
+        total_sales = (
+            paid_orders.aggregate(
+                total=Sum("total_price")
+            )["total"]
+            or 0
+        )
+
+        total_orders = paid_orders.count()
+
+        context["total_sales"] = total_sales
+        context["total_orders"] = total_orders
+
+        return context
+
+
 class OrderListView(ListView):
 
     model = Order
