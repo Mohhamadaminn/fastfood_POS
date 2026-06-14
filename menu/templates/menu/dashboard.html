@@ -7,49 +7,109 @@ Dashboard
 
 {% block content %}
 
+<h1 class="mb-4 fw-bold">
+    Dashboard
+</h1>
+
 <div class="row g-4">
 
-    <div class="col-md-4">
-
+    <div class="col-md-3">
         <div class="card shadow">
-
             <div class="card-body">
-
                 <h6 class="text-muted">
-
                     Today's Revenue
-
                 </h6>
 
                 <h2 class="text-success">
-
-                    {{ total_sales|intcomma }}
-
+                    {{ total_sales_today|intcomma }}
                 </h2>
-
             </div>
-
         </div>
-
     </div>
 
-    <div class="col-md-4">
-
+    <div class="col-md-3">
         <div class="card shadow">
-
             <div class="card-body">
-
                 <h6 class="text-muted">
-
                     Orders Today
-
                 </h6>
 
                 <h2>
-
-                    {{ total_orders }}
-
+                    {{ total_orders_today }}
                 </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <h6 class="text-muted">
+                    Average Order
+                </h6>
+
+                <h2>
+                    {{ average_order_today|floatformat:0|intcomma }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <h6 class="text-muted">
+                    Open Orders
+                </h6>
+
+                <h2>
+                    {{ open_orders }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-4 mt-1">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow h-100">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Best Seller Today
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                {% if best_seller_today %}
+
+                    <h3
+                        style="
+                            color: var(--primary-red);
+                        "
+                    >
+
+                        {{ best_seller_today.name }}
+
+                    </h3>
+
+                {% else %}
+
+                    <p>
+
+                        No sales today
+
+                    </p>
+
+                {% endif %}
 
             </div>
 
@@ -57,23 +117,45 @@ Dashboard
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-lg-6">
 
-        <div class="card shadow">
+        <div class="card shadow h-100">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Overall Statistics
+
+                </h5>
+
+            </div>
 
             <div class="card-body">
 
-                <h6 class="text-muted">
+                <p>
 
-                    Average Order
+                    Total Revenue:
 
-                </h6>
+                    <strong>
 
-                <h2>
+                        {{ total_sales_all|intcomma }}
 
-                    {{ average_order|floatformat:0|intcomma }}
+                    </strong>
 
-                </h2>
+                </p>
+
+                <p>
+
+                    Paid Orders:
+
+                    <strong>
+
+                        {{ total_paid_orders }}
+
+                    </strong>
+
+                </p>
 
             </div>
 
@@ -83,44 +165,107 @@ Dashboard
 
 </div>
 
-
-
 <div class="row mt-4">
 
-    <div class="col-lg-6">
+    <div class="col-12">
 
         <div class="card shadow">
 
-            <div class="card-body">
+            <div class="card-header">
 
-                <h5>
+                <h5 class="mb-0">
 
-                    Best Seller Product
+                    Recent Orders
 
                 </h5>
 
-                {% if best_seller %}
+            </div>
 
-                    <h3
-                        class="mt-3"
-                        style="
-                            color: var(--primary-red);
-                        "
-                    >
+            <div class="card-body p-0">
 
-                        {{ best_seller.name }}
+                <table class="table table-hover mb-0">
 
-                    </h3>
+                    <thead>
 
-                {% else %}
+                        <tr>
 
-                    <p>
+                            <th>ID</th>
 
-                        No sales yet
+                            <th>Status</th>
 
-                    </p>
+                            <th>Total</th>
 
-                {% endif %}
+                            <th>Date</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for order in recent_orders %}
+
+                        <tr>
+
+                            <td>
+
+                                #{{ order.id }}
+
+                            </td>
+
+                            <td>
+
+                                {% if order.status == "paid" %}
+
+                                    <span
+                                        class="badge"
+                                        style="
+                                            background:#112818;
+                                            color:#4ade80;
+                                        "
+                                    >
+
+                                        Paid
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="badge"
+                                        style="
+                                            background:#332200;
+                                            color:#facc15;
+                                        "
+                                    >
+
+                                        Open
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.total_price|intcomma }}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.created_at }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
 
             </div>
 

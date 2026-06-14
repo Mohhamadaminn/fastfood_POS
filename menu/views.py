@@ -170,44 +170,92 @@ class DashboardView(TemplateView):
 
         today = date.today()
 
-        paid_orders = Order.objects.filter(
+        today_paid_orders = Order.objects.filter(
             status="paid",
             created_at__date=today
         )
 
-        total_sales = (
-            paid_orders.aggregate(
+        total_sales_today = (
+            today_paid_orders.aggregate(
                 total=Sum("total_price")
             )["total"]
             or 0
         )
 
-        total_orders = paid_orders.count()
+        total_orders_today = today_paid_orders.count()
 
-        average_order = (
-            paid_orders.aggregate(
+        average_order_today = (
+            today_paid_orders.aggregate(
                 avg=Avg("total_price")
             )["avg"]
             or 0
         )
 
-        best_seller = (
-            Product.objects
-            .filter(
+        best_seller_today = (
+            Product.objects.filter(
                 orderitem__order__status="paid",
-                orderitem__order__created_at__date=today,
+                orderitem__order__created_at__date=today
             )
             .annotate(
-                total_sold=Sum("orderitem__quantity")
+                total_sold=Sum(
+                    "orderitem__quantity"
+                )
             )
-            .order_by("-total_sold")
+            .order_by(
+                "-total_sold"
+            )
             .first()
         )
 
+        all_paid_orders = Order.objects.filter(
+            status="paid"
+        )
 
-        context["total_sales"] = total_sales
-        context["total_orders"] = total_orders
-        context["average_order"] = average_order
-        context["best_seller"] = best_seller
+        total_sales_all = (
+            all_paid_orders.aggregate(
+                total=Sum("total_price")
+            )["total"]
+            or 0
+        )
+
+        total_paid_orders = all_paid_orders.count()
+
+        open_orders = Order.objects.filter(
+            status="open"
+        ).count()
+
+        recent_orders = (
+            Order.objects.order_by(
+                "-created_at"
+            )[:5]
+        )
+
+        context.update({
+
+            "total_sales_today":
+                total_sales_today,
+
+            "total_orders_today":
+                total_orders_today,
+
+            "average_order_today":
+                average_order_today,
+
+            "best_seller_today":
+                best_seller_today,
+
+            "total_sales_all":
+                total_sales_all,
+
+            "total_paid_orders":
+                total_paid_orders,
+
+            "open_orders":
+                open_orders,
+
+            "recent_orders":
+                recent_orders,
+
+        })
 
         return context
