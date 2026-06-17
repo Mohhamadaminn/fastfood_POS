@@ -1,5 +1,6 @@
 {% extends "_base.html" %}
-{% load humanize %}
+
+{% load custom_filters %}
 {% load i18n %}
 
 {% block title %}
@@ -42,7 +43,7 @@
                             </span>
                         {% endif %}
                     </td>
-                    <td>{{ order.total_price|intcomma }}</td>
+                    <td>{{ order.total_price|persian_number }}</td>
                     <td>{{ order.created_at }}</td>
                     <td>
                         <a href="{% url 'order-detail' order.id %}" class="btn btn-sm btn-outline-danger">

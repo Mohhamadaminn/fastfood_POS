@@ -1,6 +1,8 @@
 {% extends "_base.html" %}
-{% load humanize %}
+
+{% load custom_filters %}
 {% load i18n %}
+
 
 {% block title %}
 {% trans "Dashboard" %}
@@ -21,8 +23,8 @@
                     {% trans "Today's Revenue" %}
                 </h6>
 
-                <h2 class="text-success">
-                    {{ total_sales_today|intcomma }}
+                <h2 class="text-danger">
+                    {{ total_sales_today|persian_number }}
                 </h2>
             </div>
         </div>
@@ -50,7 +52,7 @@
                 </h6>
 
                 <h2>
-                    {{ average_order_today|floatformat:0|intcomma }}
+                    {{ average_order_today|persian_number }}
                 </h2>
             </div>
         </div>
@@ -140,7 +142,7 @@
 
                     <strong>
 
-                        {{ total_sales_all|intcomma }}
+                        {{ total_sales_all|persian_number }}
 
                     </strong>
 
@@ -250,7 +252,7 @@
 
                             <td>
 
-                                {{ order.total_price|intcomma }}
+                                {{ order.total_price|persian_number }}
 
                             </td>
 

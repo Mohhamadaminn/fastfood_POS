@@ -1,7 +1,8 @@
 {% extends "_base.html" %}
 
+{% load custom_filters %}
+{% load static %}
 {% load i18n %}
-
 {% load humanize %}
 {% block content %}
 <div class="row g-4">
@@ -41,7 +42,7 @@
                             <div class="card-body text-center pt-3">
                                 <h5 class="fw-bold mb-2">{{ product.name }}</h5>
                                 <p class="text-success fs-5 mb-0 fw-semibold">
-                                    {{ product.price|intcomma }} {% trans "Toman" %}
+                                    {{ product.price|persian_number }} {% trans "Toman" %}
                                 </p>
                             </div>
                         </div>
@@ -188,7 +189,7 @@
                     </button>
 
                     {% endif %}
-                    <span class="text-success">{{ order.total_price|intcomma }} {% trans "Toman" %}</span>
+                    <span class="text-success">{{ order.total_price|persian_number }} {% trans "Toman" %}</span>
                 </div>
             </div>
         </div>

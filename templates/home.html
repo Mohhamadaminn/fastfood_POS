@@ -1,8 +1,9 @@
 {% extends "_base.html" %}
-{% load humanize %}
+{% load static %}
+{% load custom_filters %}
 {% load i18n %}
 
-{% block title %}{% trans "Home" %} - Burger POS{% endblock %}
+{% block title %}{% trans "Home" %} - {% trans "Burger POS" %}{% endblock %}
 
 {% block content %}
 <div class="row mb-4">
@@ -19,9 +20,14 @@
 <a href="{% url 'order-create' %}" class="text-decoration-none">
 <div class="card h-100 product-card new-order-card shadow">
 <div class="card-body text-center d-flex flex-column justify-content-center p-5">
-<i class="bi bi-plus-circle-fill mb-3" style="font-size: 4.5rem; color: #4ade80;"></i>
+<div class="icon-circle icon-circle-lg icon-circle-red">
+<i class="bi bi-plus-circle-fill"></i>
+</div>
 <h3 class="fw-bold mb-1">{% trans "New Order" %}</h3>
 <p class="text-muted small mb-0">{% trans "Quick Start Sale" %}</p>
+<span class="card-action-btn card-action-btn-red">
+{% trans "Get Started" %}<i class="bi bi-arrow-left"></i>
+</span>
 </div>
 </div>
 </a>
@@ -33,9 +39,14 @@
 <a href="{% url 'dashboard' %}" class="text-decoration-none">
 <div class="card h-100 product-card shadow">
 <div class="card-body text-center d-flex flex-column justify-content-center p-5">
-<i class="bi bi-bar-chart-fill mb-3" style="font-size: 3.5rem; color: var(--primary-red);"></i>
+<div class="icon-circle icon-circle-gray">
+<i class="bi bi-bar-chart-fill"></i>
+</div>
 <h5 class="fw-bold mb-1">{% trans "Dashboard" %}</h5>
 <p class="text-muted small mb-0">{% trans "Reports & Statistics" %}</p>
+<span class="card-action-btn card-action-btn-outline">
+{% trans "View" %}<i class="bi bi-arrow-left"></i>
+</span>
 </div>
 </div>
 </a>
@@ -44,9 +55,14 @@
 <a href="{% url 'order-list' %}" class="text-decoration-none">
 <div class="card h-100 product-card shadow">
 <div class="card-body text-center d-flex flex-column justify-content-center p-5">
-<i class="bi bi-clock-history mb-3" style="font-size: 3.5rem; color: #60a5fa;"></i>
+<div class="icon-circle icon-circle-red-muted">
+<i class="bi bi-clock-history"></i>
+</div>
 <h5 class="fw-bold mb-1">{% trans "Orders" %}</h5>
 <p class="text-muted small mb-0">{% trans "Sales History" %}</p>
+<span class="card-action-btn card-action-btn-outline">
+{% trans "View" %}<i class="bi bi-arrow-left"></i>
+</span>
 </div>
 </div>
 </a>
@@ -63,12 +79,12 @@
 <div>
 <p class="text-muted small mb-2">{% trans "Today's Revenue" %}</p>
 <h2 class="stat-number text-white mb-0">
-{{ total_sales|intcomma }}
+{{ total_sales|persian_number }}
 <small class="fs-6 fw-normal text-muted">{% trans "Toman" %}</small>
 </h2>
 </div>
-<div style="background: rgba(230,57,57,0.1); border-radius: 12px; padding: 14px;">
-<i class="bi bi-currency-dollar fs-2" style="color: var(--primary-red);"></i>
+<div class="icon-badge icon-badge-red">
+<i class="bi bi-currency-dollar"></i>
 </div>
 </div>
 </div>
@@ -83,8 +99,8 @@
 <p class="text-muted small mb-2">{% trans "Orders Today" %}</p>
 <h2 class="stat-number text-white mb-0">{{ total_orders }}</h2>
 </div>
-<div style="background: rgba(96,165,250,0.1); border-radius: 12px; padding: 14px;">
-<i class="bi bi-receipt fs-2" style="color: #60a5fa;"></i>
+<div class="icon-badge icon-badge-gray">
+<i class="bi bi-receipt"></i>
 </div>
 </div>
 </div>
