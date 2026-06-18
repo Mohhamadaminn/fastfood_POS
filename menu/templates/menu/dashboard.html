@@ -19,13 +19,19 @@
     <div class="col-md-3">
         <div class="card shadow">
             <div class="card-body">
-                <h6 class="text-muted">
-                    {% trans "Today's Revenue" %}
-                </h6>
-
-                <h2 class="text-danger">
-                    {{ total_sales_today|persian_number }}
-                </h2>
+                <div class="stat-mini">
+                    <div>
+                        <h6 class="text-muted mb-2">
+                            {% trans "Today's Revenue" %}
+                        </h6>
+                        <h2 class="stat-number text-white mb-0">
+                            {{ total_sales_today|persian_number }}
+                        </h2>
+                    </div>
+                    <div class="icon-badge icon-badge-red">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -33,13 +39,19 @@
     <div class="col-md-3">
         <div class="card shadow">
             <div class="card-body">
-                <h6 class="text-muted">
-                    {% trans "Orders Today" %}
-                </h6>
-
-                <h2>
-                    {{ total_orders_today }}
-                </h2>
+                <div class="stat-mini">
+                    <div>
+                        <h6 class="text-muted mb-2">
+                            {% trans "Orders Today" %}
+                        </h6>
+                        <h2 class="stat-number text-white mb-0">
+                            {{ total_orders_today }}
+                        </h2>
+                    </div>
+                    <div class="icon-badge icon-badge-gray">
+                        <i class="bi bi-receipt"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,13 +59,19 @@
     <div class="col-md-3">
         <div class="card shadow">
             <div class="card-body">
-                <h6 class="text-muted">
-                    {% trans "Average Order" %}
-                </h6>
-
-                <h2>
-                    {{ average_order_today|persian_number }}
-                </h2>
+                <div class="stat-mini">
+                    <div>
+                        <h6 class="text-muted mb-2">
+                            {% trans "Average Order" %}
+                        </h6>
+                        <h2 class="stat-number text-white mb-0">
+                            {{ average_order_today|persian_number }}
+                        </h2>
+                    </div>
+                    <div class="icon-badge icon-badge-gray">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -61,13 +79,19 @@
     <div class="col-md-3">
         <div class="card shadow">
             <div class="card-body">
-                <h6 class="text-muted">
-                    {% trans "Open Orders" %}
-                </h6>
-
-                <h2>
-                    {{ open_orders }}
-                </h2>
+                <div class="stat-mini">
+                    <div>
+                        <h6 class="text-muted mb-2">
+                            {% trans "Open Orders" %}
+                        </h6>
+                        <h2 class="stat-number text-white mb-0">
+                            {{ open_orders }}
+                        </h2>
+                    </div>
+                    <div class="icon-badge icon-badge-red">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -106,8 +130,9 @@
 
                 {% else %}
 
-                    <p>
+                    <p class="text-muted text-center py-4 mb-0">
 
+                        <i class="bi bi-emoji-neutral fs-2 d-block mb-2"></i>
                         {% trans "No sales today" %}
 
                     </p>
@@ -136,29 +161,29 @@
 
             <div class="card-body">
 
-                <p>
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="border-color: var(--border) !important;">
 
-                    {% trans "Total Revenue:" %}
+                    <span class="text-muted">{% trans "Total Revenue:" %}</span>
 
-                    <strong>
+                    <strong class="price-tag fs-5">
 
                         {{ total_sales_all|persian_number }}
 
                     </strong>
 
-                </p>
+                </div>
 
-                <p>
+                <div class="d-flex justify-content-between align-items-center py-2">
 
-                    {% trans "Paid Orders:" %}
+                    <span class="text-muted">{% trans "Paid Orders:" %}</span>
 
-                    <strong>
+                    <strong class="fs-5">
 
                         {{ total_paid_orders }}
 
                     </strong>
 
-                </p>
+                </div>
 
             </div>
 
@@ -220,48 +245,43 @@
 
                                 {% if order.status == "paid" %}
 
-                                    <span
-                                        class="badge"
-                                        style="
-                                            background:#112818;
-                                            color:#4ade80;
-                                        "
-                                    >
-
+                                    <span class="status-badge status-badge-paid">
+                                        <i class="bi bi-check-circle-fill"></i>
                                         {% trans "Paid" %}
-
                                     </span>
 
                                 {% else %}
 
-                                    <span
-                                        class="badge"
-                                        style="
-                                            background:#332200;
-                                            color:#facc15;
-                                        "
-                                    >
-
+                                    <span class="status-badge status-badge-open">
+                                        <i class="bi bi-circle-fill"></i>
                                         {% trans "Open" %}
-
                                     </span>
 
                                 {% endif %}
 
                             </td>
 
-                            <td>
+                            <td class="price-tag">
 
                                 {{ order.total_price|persian_number }}
 
                             </td>
 
-                            <td>
+                            <td class="text-muted">
 
-                                {{ order.created_at }}
+                                {{ order.created_at|to_jalali }}
 
                             </td>
 
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+                                {% trans "No orders found." %}
+                            </td>
                         </tr>
 
                         {% endfor %}

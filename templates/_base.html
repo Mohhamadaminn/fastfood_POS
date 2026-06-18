@@ -242,6 +242,181 @@ body {
     font-weight: 700;
     line-height: 1.1;
 }
+
+.stat-mini {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.price-tag { color: var(--primary-red); font-weight: 600; }
+
+/* ---------- Status badges ---------- */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.status-badge i { font-size: 0.65rem; }
+
+.status-badge-paid {
+    background: var(--surface-4);
+    color: #c7cad1;
+    box-shadow: inset 0 0 0 1px var(--border-light);
+}
+
+.status-badge-open {
+    background: rgba(230, 57, 57, 0.14);
+    color: var(--red-light);
+    box-shadow: inset 0 0 0 1px rgba(230, 57, 57, 0.35);
+}
+
+/* ---------- POS action buttons ---------- */
+.btn-pos-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--primary-red);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1.5rem;
+    min-height: 48px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: var(--transition-base);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-pos-primary:hover {
+    background: var(--red-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -10px var(--red-glow);
+}
+
+.btn-pos-primary:active { transform: translateY(0); }
+
+.btn-pos-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--surface-3);
+    color: #9ca3af;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1.5rem;
+    min-height: 48px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: not-allowed;
+}
+
+.btn-pos-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border-light);
+    color: #c7cad1;
+    padding: 0.4rem 0.95rem;
+    min-height: 34px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: var(--transition-base);
+    text-decoration: none;
+}
+
+.btn-pos-sm:hover {
+    border-color: var(--primary-red);
+    color: white;
+    background: rgba(230, 57, 57, 0.1);
+}
+
+.btn-pos-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    transition: var(--transition-base);
+    cursor: pointer;
+}
+
+.btn-pos-icon:hover {
+    background: var(--primary-red);
+    border-color: var(--primary-red);
+    color: white;
+}
+
+/* ---------- Quantity stepper ---------- */
+.qty-stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px;
+}
+
+.qty-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface-4);
+    color: #e5e7eb;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+    cursor: pointer;
+}
+
+.qty-btn:hover { background: var(--primary-red); color: white; }
+
+.qty-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 700;
+    color: white;
+}
+
+/* ---------- Tables ---------- */
+.table { color: #e5e7eb; }
+
+.table > :not(caption) > * > * {
+    border-bottom-color: var(--border);
+    background-color: transparent;
+}
+
+.table thead th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border) !important;
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(230, 57, 57, 0.05);
+}
 </style>
 </head>
 <body>
