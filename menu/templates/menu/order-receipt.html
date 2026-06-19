@@ -1,0 +1,219 @@
+{% load i18n %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% trans "Invoice" %} #{{ order.id }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<style>
+:root {
+    --ink: #1a1a1a;
+    --muted: #6b7280;
+    --accent: #e63939;
+    --line: #e5e7eb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: #f3f4f6;
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    color: var(--ink);
+    margin: 0;
+    padding: 32px 16px;
+}
+
+.toolbar {
+    max-width: 640px;
+    margin: 0 auto 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.toolbar a, .toolbar button {
+    border: 1px solid #d1d5db;
+    background: white;
+    color: var(--ink);
+    padding: 0.5rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+}
+
+.toolbar .print-btn {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.receipt {
+    max-width: 640px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.15);
+    border-top: 4px solid var(--accent);
+    padding: 40px;
+}
+
+.receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px dashed var(--line);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.brand { font-size: 1.3rem; font-weight: 700; }
+.brand small {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 4px;
+}
+
+.meta { font-size: 0.85rem; color: var(--muted); }
+.meta div { margin-bottom: 4px; }
+.meta strong { color: var(--ink); }
+
+.status-pill {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.status-pill.paid { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+.status-pill.open { background: #fdecec; color: var(--accent); border: 1px solid var(--accent); }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+
+thead th {
+    font-size: 0.78rem;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 4px;
+    font-weight: 600;
+}
+
+thead th.num, tbody td.num { text-align: left; }
+
+tbody td {
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.92rem;
+}
+
+.totals { display: flex; justify-content: flex-start; }
+.totals table { width: auto; min-width: 260px; margin-bottom: 0; }
+.totals td { padding: 6px 4px; border-bottom: none; font-size: 0.92rem; }
+.totals .grand td {
+    font-size: 1.15rem;
+    font-weight: 700;
+    border-top: 2px solid var(--ink);
+    padding-top: 12px;
+    color: var(--accent);
+}
+
+.footer-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 28px;
+    border-top: 1px dashed var(--line);
+    padding-top: 16px;
+}
+
+@media print {
+    body { background: white; padding: 0; }
+    .toolbar { display: none; }
+    .receipt { box-shadow: none; border-radius: 0; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+    <a href="{% url 'order-detail' order.id %}">{% trans "Back" %}</a>
+    <button type="button" class="print-btn" onclick="window.print()">
+        <i class="bi bi-printer"></i>
+        {% trans "Print" %}
+    </button>
+</div>
+
+<div class="receipt">
+    <div class="receipt-header">
+        <div class="brand">
+            {% trans "Burger POS" %}
+            <small>{% trans "Sales Invoice" %}</small>
+        </div>
+        <div class="meta">
+            <div>{% trans "Order" %}: <strong>#{{ order.id|persian_number }}</strong></div>
+            <div>{% trans "Date" %}: <strong>{{ order.created_at|date:"Y/m/d H:i"|persian_number }}</strong></div>
+            <div>
+                {% if order.status == "paid" %}
+                    <span class="status-pill paid">{% trans "Paid" %}</span>
+                {% else %}
+                    <span class="status-pill open">{% trans "Unpaid" %}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans "Item" %}</th>
+                <th class="num">{% trans "Qty" %}</th>
+                <th class="num">{% trans "Unit Price" %}</th>
+                <th class="num">{% trans "Subtotal" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td class="num">{{ item.quantity|persian_number }}</td>
+                <td class="num">{{ item.unit_price|persian_number }}</td>
+                <td class="num">{{ item.subtotal|persian_number }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align:center; color:var(--muted); padding: 24px 0;">
+                    {% trans "No items in this order" %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="totals">
+        <table>
+            <tr class="grand">
+                <td>{% trans "Total" %}</td>
+                <td class="num">{{ order.total_price|persian_number }} {% trans "Toman" %}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        {% trans "Thank you for your purchase" %}
+    </div>
+</div>
+
+</body>
+</html>

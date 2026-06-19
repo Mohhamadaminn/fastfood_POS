@@ -6,6 +6,16 @@
 {% block title %}{% trans "Home" %} - {% trans "Burger POS" %}{% endblock %}
 
 {% block content %}
+
+{% if user.is_authenticated %}
+
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">logout</button>
+</form>
+
+{% endif %}
+
 <div class="row mb-4">
 <div class="col-12 text-center">
 <h1 class="fw-bold text-white mb-1" style="font-size: 1.75rem;">

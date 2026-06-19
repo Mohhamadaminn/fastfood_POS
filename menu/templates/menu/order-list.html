@@ -52,6 +52,11 @@
                             {% trans "View" %}
                             <i class="bi bi-arrow-left"></i>
                         </a>
+                        {% if order.status == "paid" %}
+                        <a href="{% url 'order-receipt' order.id %}" target="_blank" class="btn-pos-icon ms-1" title="{% trans 'Print Invoice' %}">
+                            <i class="bi bi-printer"></i>
+                        </a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% empty %}

@@ -1,19 +1,18 @@
 from django.urls import path
 from .views import (
-    OrderCreateView, 
-    OrderDetailView,
-    AddItemView,
-    IncreaseQuantityView,
-    DecreaseQuantityView,
-    DeleteItemView,
-    CompleteOrderView,
-    PaymentSuccessView,
-    DashboardView,
-    OrderListView,
-    HomeView,
+OrderCreateView, 
+OrderDetailView,
+AddItemView,
+IncreaseQuantityView,
+DecreaseQuantityView,
+DeleteItemView,
+CompleteOrderView,
+PaymentSuccessView,
+OrderReceiptView,
+DashboardView,
+OrderListView,
+HomeView,
 )
-
-
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('orders/new/', OrderCreateView.as_view(), name='order-create'),
@@ -23,6 +22,7 @@ urlpatterns = [
     path('item/<int:pk>/decrease/', DecreaseQuantityView.as_view(), name='decrease-item'),
     path('item/<int:pk>/delete/', DeleteItemView.as_view(), name='delete-item'),
     path('orders/<int:pk>/complete/', CompleteOrderView.as_view(), name='complete-order'),
+    path('orders/<int:pk>/receipt/', OrderReceiptView.as_view(), name='order-receipt'),
     path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('orders/', OrderListView.as_view(), name='order-list')

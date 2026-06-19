@@ -3,17 +3,16 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic import TemplateView
 from django.db.models import Sum, Avg
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from datetime import date
-
-
 
 from .models import Product, Order, OrderItem
 from .forms import AddItemForm
 
 
-
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
 
     template_name = "home.html"
 
@@ -43,7 +42,7 @@ class HomeView(TemplateView):
         return context
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
 
     model = Order
 
@@ -56,14 +55,14 @@ class OrderListView(ListView):
     paginate_by = 20
 
 
-class OrderCreateView(View):
+class OrderCreateView(LoginRequiredMixin, View):
     def get(self, request):
         request.session.pop("last_paid_order", None)
         order = Order.objects.create()
         return redirect("order-detail", pk=order.id)
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'menu/order-detail.html'
     context_object_name = 'order'
@@ -75,7 +74,7 @@ class OrderDetailView(DetailView):
         return context
 
 
-class AddItemView(View):
+class AddItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
         order = get_object_or_404(Order, pk=pk)
         if order.status == "paid":
@@ -105,7 +104,7 @@ class AddItemView(View):
             return redirect('order-detail', pk=order.pk)
 
 
-class IncreaseQuantityView(View):
+class IncreaseQuantityView(LoginRequiredMixin, View):
     def post(self, request, pk):
         item = get_object_or_404(OrderItem, pk=pk)
         if item.order.status == "paid":
@@ -117,7 +116,7 @@ class IncreaseQuantityView(View):
         return redirect("order-detail", pk=item.order.id)
 
 
-class DecreaseQuantityView(View):
+class DecreaseQuantityView(LoginRequiredMixin, View):
     def post(self, request, pk):
         item = get_object_or_404(OrderItem, pk=pk)
         if item.order.status == "paid":
@@ -133,7 +132,7 @@ class DecreaseQuantityView(View):
         return redirect("order-detail", pk=item.order.id)
 
 
-class DeleteItemView(View):
+class DeleteItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
         item = get_object_or_404(OrderItem, pk=pk)
         if item.order.status == "paid":
@@ -145,7 +144,7 @@ class DeleteItemView(View):
         return redirect("order-detail", pk=order.id)
 
 
-class CompleteOrderView(View):
+class CompleteOrderView(LoginRequiredMixin, View):
     def post(self, request, pk):
         order = get_object_or_404(Order, pk=pk)
         order.status = "paid"
@@ -154,21 +153,33 @@ class CompleteOrderView(View):
         return redirect("payment-success")
 
 
-class PaymentSuccessView(View):
+class PaymentSuccessView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'menu/payment-success.html')
-    
 
 
-class DashboardView(TemplateView):
+class OrderReceiptView(LoginRequiredMixin, DetailView):
+
+    model = Order
+    template_name = 'menu/order-receipt.html'
+    context_object_name = 'order'
+
+
+class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     template_name = "menu/dashboard.html"
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
 
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
 
         today = date.today()
+
+        
 
         today_paid_orders = Order.objects.filter(
             status="paid",
