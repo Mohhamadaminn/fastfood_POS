@@ -11,6 +11,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 <style>
+
 :root {
     --primary-red: #e63939;
     --red-dark: #c1121f;
@@ -417,6 +418,26 @@ body {
 .table-hover > tbody > tr:hover > * {
     background-color: rgba(230, 57, 57, 0.05);
 }
+
+
+.status-badge-draft {
+    background: rgba(245, 158, 11, 0.14);
+    color: #f59e0b;
+    box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.35);
+}
+
+.status-badge-cancelled {
+    background: rgba(220, 38, 38, 0.12);
+    color: #f87171;
+    box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.3);
+}
+
+.status-badge-secondary {
+    background: var(--surface-4);
+    color: var(--text-muted);
+    box-shadow: inset 0 0 0 1px var(--border-light);
+}
+
 
 </style>
 

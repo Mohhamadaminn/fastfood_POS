@@ -58,8 +58,13 @@ class OrderListView(LoginRequiredMixin, ListView):
 class OrderCreateView(LoginRequiredMixin, View):
     def get(self, request):
         request.session.pop("last_paid_order", None)
-        order = Order.objects.create()
+        
+        order = Order.objects.create(
+            user=request.user,
+            status='draft'
+        )
         return redirect("order-detail", pk=order.id)
+    
 
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
@@ -77,18 +82,17 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 class AddItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
         order = get_object_or_404(Order, pk=pk)
+        
         if order.status == "paid":
             return redirect("order-detail", pk=order.id)
-
+        
         form = AddItemForm(request.POST)
         if form.is_valid():
             product = form.cleaned_data['product']
             quantity = form.cleaned_data['quantity']
-
-            item = OrderItem.objects.filter(
-                order=order, product=product
-            ).first()
-
+            
+            item = OrderItem.objects.filter(order=order, product=product).first()
+            
             if item:
                 item.quantity += quantity
                 item.save()
@@ -99,10 +103,16 @@ class AddItemView(LoginRequiredMixin, View):
                     quantity=quantity,
                     unit_price=product.price,
                 )
-
+            
+            # Important: Change status from draft to open when items are added
+            if order.status == 'draft':
+                order.status = 'open'
+                order.save()
+            
             order.update_total_price()
             return redirect('order-detail', pk=order.pk)
-
+        
+        return redirect('order-detail', pk=order.pk)
 
 class IncreaseQuantityView(LoginRequiredMixin, View):
     def post(self, request, pk):
@@ -166,107 +176,51 @@ class OrderReceiptView(LoginRequiredMixin, DetailView):
 
 
 class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-
     template_name = "menu/dashboard.html"
 
     def test_func(self):
         return self.request.user.is_superuser
 
-
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
-
         today = date.today()
 
-        
-
+        # Only real paid orders
         today_paid_orders = Order.objects.filter(
             status="paid",
             created_at__date=today
         )
 
-        total_sales_today = (
-            today_paid_orders.aggregate(
-                total=Sum("total_price")
-            )["total"]
-            or 0
-        )
-
+        total_sales_today = today_paid_orders.aggregate(total=Sum("total_price"))["total"] or 0
         total_orders_today = today_paid_orders.count()
-
-        average_order_today = (
-            today_paid_orders.aggregate(
-                avg=Avg("total_price")
-            )["avg"]
-            or 0
-        )
+        average_order_today = today_paid_orders.aggregate(avg=Avg("total_price"))["avg"] or 0
 
         best_seller_today = (
             Product.objects.filter(
                 orderitem__order__status="paid",
                 orderitem__order__created_at__date=today
             )
-            .annotate(
-                total_sold=Sum(
-                    "orderitem__quantity"
-                )
-            )
-            .order_by(
-                "-total_sold"
-            )
+            .annotate(total_sold=Sum("orderitem__quantity"))
+            .order_by("-total_sold")
             .first()
         )
 
-        all_paid_orders = Order.objects.filter(
-            status="paid"
-        )
-
-        total_sales_all = (
-            all_paid_orders.aggregate(
-                total=Sum("total_price")
-            )["total"]
-            or 0
-        )
-
+        all_paid_orders = Order.objects.filter(status="paid")
+        total_sales_all = all_paid_orders.aggregate(total=Sum("total_price"))["total"] or 0
         total_paid_orders = all_paid_orders.count()
 
-        open_orders = Order.objects.filter(
-            status="open"
-        ).count()
-
-        recent_orders = (
-            Order.objects.order_by(
-                "-created_at"
-            )[:5]
-        )
+        # Improved: Exclude drafts
+        open_orders = Order.objects.filter(status="open").count()
+        recent_orders = Order.objects.filter(status__in=['open', 'paid']).order_by("-created_at")[:5]
 
         context.update({
-
-            "total_sales_today":
-                total_sales_today,
-
-            "total_orders_today":
-                total_orders_today,
-
-            "average_order_today":
-                average_order_today,
-
-            "best_seller_today":
-                best_seller_today,
-
-            "total_sales_all":
-                total_sales_all,
-
-            "total_paid_orders":
-                total_paid_orders,
-
-            "open_orders":
-                open_orders,
-
-            "recent_orders":
-                recent_orders,
-
+            "total_sales_today": total_sales_today,
+            "total_orders_today": total_orders_today,
+            "average_order_today": average_order_today,
+            "best_seller_today": best_seller_today,
+            "total_sales_all": total_sales_all,
+            "total_paid_orders": total_paid_orders,
+            "open_orders": open_orders,
+            "recent_orders": recent_orders,
         })
-
         return context

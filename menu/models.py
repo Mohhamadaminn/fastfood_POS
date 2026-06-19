@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.auth import get_user_model
 
 
 class Product(models.Model):
@@ -16,14 +17,16 @@ class Product(models.Model):
 class Order(models.Model):
 
     STATUS_CHOICES=[
+        ('draft', 'draft'),
         ('open', 'open'),
         ('paid', 'paid'),
+        ('cancelled', 'cancelled'),
     ]
 
-
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.PositiveIntegerField(default=0)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='open')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
 
     
     def update_total_price(self):
