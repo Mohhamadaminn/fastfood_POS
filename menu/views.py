@@ -83,7 +83,7 @@ class AddItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
         order = get_object_or_404(Order, pk=pk)
         
-        if order.status == "paid":
+        if order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=order.id)
         
         form = AddItemForm(request.POST)
@@ -117,7 +117,7 @@ class AddItemView(LoginRequiredMixin, View):
 class IncreaseQuantityView(LoginRequiredMixin, View):
     def post(self, request, pk):
         item = get_object_or_404(OrderItem, pk=pk)
-        if item.order.status == "paid":
+        if item.order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=item.order.id)
 
         item.quantity += 1
@@ -129,7 +129,7 @@ class IncreaseQuantityView(LoginRequiredMixin, View):
 class DecreaseQuantityView(LoginRequiredMixin, View):
     def post(self, request, pk):
         item = get_object_or_404(OrderItem, pk=pk)
-        if item.order.status == "paid":
+        if item.order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=item.order.id)
 
         if item.quantity > 1:
@@ -145,7 +145,7 @@ class DecreaseQuantityView(LoginRequiredMixin, View):
 class DeleteItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
         item = get_object_or_404(OrderItem, pk=pk)
-        if item.order.status == "paid":
+        if item.order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=item.order.id)
 
         order = item.order
@@ -224,3 +224,16 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             "recent_orders": recent_orders,
         })
         return context
+    
+
+
+class CancelOrderView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        order = get_object_or_404(Order, pk=pk)
+
+        if order.status == "cancelled":
+            return redirect("order-detail", pk=order.id)
+
+        order.status = "cancelled"
+        order.save()
+        return redirect('home')

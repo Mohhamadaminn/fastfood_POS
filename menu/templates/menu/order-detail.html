@@ -135,52 +135,55 @@
                         <span class="price-tag fs-4">{{ order.total_price|persian_number }} {% trans "Toman" %}</span>
                     </div>
 
-                    {% if order.status == "open" %}
+                    
 
-                    <form
-                        method="post"
-                        action="{% url 'complete-order' order.id %}"
-                    >
-
-                        {% csrf_token %}
-
-                        <button
-                            class="btn-pos-primary w-100"
-                            type="submit"
-                        >
-
-                            <i class="bi bi-cash-stack"></i>
-
-                            {% trans "Complete Payment" %}
-
-                        </button>
-
-                    </form>
-
-                    {% else %}
-
-                    <button
-                        class="btn-pos-secondary w-100"
-                        type="button"
-                        disabled
-                    >
-
-                        <i class="bi bi-check-circle-fill"></i>
-
-                        {% trans "Order Paid" %}
-
+                    {% if order.status == "cancelled" %}
+                    <button class="btn-pos-secondary w-100" type="button" disabled>
+                        <i class="bi bi-x-circle-fill"></i>
+                        {% trans "Order Cancelled" %}
                     </button>
 
-                    <a
-                        href="{% url 'order-receipt' order.id %}"
-                        target="_blank"
-                        class="btn-pos-sm w-100 justify-content-center mt-2"
-                    >
+                    {% elif order.status == "paid" %}
+                    <button class="btn-pos-secondary w-100" type="button" disabled>
+                        <i class="bi bi-check-circle-fill"></i>
+                        {% trans "Order Paid" %}
+                    </button>
+                    <a href="{% url 'order-receipt' order.id %}" target="_blank" class="btn-pos-sm w-100 justify-content-center mt-2">
                         <i class="bi bi-printer"></i>
                         {% trans "Print Invoice" %}
                     </a>
+                    <form method="post" action="{% url 'cancel-order' order.id %}" class="mt-2"
+                        onsubmit='return confirm("{% trans "Cancel this paid order? This cannot be undone." %}");'>
+                        {% csrf_token %}
+                        <button class="btn-pos-sm w-100 justify-content-center" type="submit"
+                                style="border-color: var(--red-dark); color: var(--red-light);">
+                            <i class="bi bi-x-circle"></i>
+                            {% trans "Cancel / Refund Order" %}
+                        </button>
+                    </form>
 
+                    {% else %}
+                    <form method="post" action="{% url 'complete-order' order.id %}">
+                        {% csrf_token %}
+                        <button class="btn-pos-primary w-100" type="submit">
+                            <i class="bi bi-cash-stack"></i>
+                            {% trans "Complete Payment" %}
+                        </button>
+                    </form>
+                    <form method="post" action="{% url 'cancel-order' order.id %}" class="mt-2"
+                        onsubmit='return confirm("{% trans "Cancel this order?" %}");'>
+                        {% csrf_token %}
+                        <button class="btn-pos-sm w-100 justify-content-center" type="submit"
+                                style="border-color: var(--red-dark); color: var(--red-light);">
+                            <i class="bi bi-x-circle"></i>
+                            {% trans "Cancel Order" %}
+                        </button>
+                    </form>
                     {% endif %}
+
+
+
+
                 </div>
             </div>
         </div>

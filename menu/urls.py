@@ -12,7 +12,10 @@ OrderReceiptView,
 DashboardView,
 OrderListView,
 HomeView,
+CancelOrderView,
 )
+
+
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('orders/new/', OrderCreateView.as_view(), name='order-create'),
@@ -25,5 +28,6 @@ urlpatterns = [
     path('orders/<int:pk>/receipt/', OrderReceiptView.as_view(), name='order-receipt'),
     path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
-    path('orders/', OrderListView.as_view(), name='order-list')
+    path('orders/', OrderListView.as_view(), name='order-list'),
+    path('orders/<int:pk>/cancel/', CancelOrderView.as_view(), name='cancel-order'),
 ]
