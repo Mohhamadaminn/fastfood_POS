@@ -462,11 +462,33 @@ body {
 <i class="bi bi-clock-history"></i>
 <span class="d-none d-sm-inline">{% trans "Orders" %}</span>
 </a>
-<button type="button" class="nav-btn" title="{% trans 'Cashier' %}">
-<i class="bi bi-person-circle"></i>
-<span class="d-none d-sm-inline">{% trans "Cashier" %}</span>
-<span class="status-dot"></span>
+<!-- Logout Button with HTML5 Dialog -->
+<button type="button" class="nav-btn" title="{% trans 'Logout' %}" 
+        onclick="document.getElementById('logoutDialog').showModal()">
+    <i class="bi bi-box-arrow-right"></i>
+    <span class="d-none d-sm-inline">{% trans "Logout" %}</span>
 </button>
+</div>
+</div>
+</nav>
+
+<!-- Confirmation Dialog (Pure HTML5) -->
+<dialog id="logoutDialog" style="border: none; border-radius: 8px; padding: 20px; max-width: 400px;">
+    <div style="text-align: center;">
+        <h3>{% trans "Confirm Logout" %}</h3>
+        <p>{% trans "Are you sure you want to logout?" %}</p>
+        <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="background: #dc3545; color: white; border: none; padding: 8px 20px; border-radius: 4px; margin: 5px; cursor: pointer;">
+                {% trans "Yes, Logout" %}
+            </button>
+        </form>
+        <button type="button" onclick="document.getElementById('logoutDialog').close()" 
+                style="background: #6c757d; color: white; border: none; padding: 8px 20px; border-radius: 4px; margin: 5px; cursor: pointer;">
+            {% trans "Cancel" %}
+        </button>
+    </div>
+</dialog>
 </div>
 </div>
 </nav>

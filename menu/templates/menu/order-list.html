@@ -1,5 +1,6 @@
 {% extends "_base.html" %}
 
+{% load tz %}
 {% load custom_filters %}
 {% load i18n %}
 
@@ -61,7 +62,7 @@
                         {% endif %}
                     </td>
                     <td class="price-tag">{{ order.total_price|persian_number }}</td>
-                    <td class="text-muted">{{ order.created_at }}</td>
+                    <td class="text-muted">{{ order.created_at|localtime|to_jalali }}</td>
                     <td class="text-end">
                         <a href="{% url 'order-detail' order.id %}" class="btn-pos-sm">
                             {% trans "View" %}

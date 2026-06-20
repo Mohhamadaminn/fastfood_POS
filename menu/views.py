@@ -104,7 +104,6 @@ class AddItemView(LoginRequiredMixin, View):
                     unit_price=product.price,
                 )
             
-            # Important: Change status from draft to open when items are added
             if order.status == 'draft':
                 order.status = 'open'
                 order.save()
@@ -209,7 +208,6 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         total_sales_all = all_paid_orders.aggregate(total=Sum("total_price"))["total"] or 0
         total_paid_orders = all_paid_orders.count()
 
-        # Improved: Exclude drafts
         open_orders = Order.objects.filter(status="open").count()
         recent_orders = Order.objects.filter(status__in=['open', 'paid']).order_by("-created_at")[:5]
 
