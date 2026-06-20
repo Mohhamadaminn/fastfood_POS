@@ -5,7 +5,8 @@ from django.views.generic import TemplateView
 from django.db.models import Sum, Avg
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
-
+from django.contrib import messages
+from django.utils.translation import gettext as _
 from datetime import date
 
 from .models import Product, Order, OrderItem
@@ -156,8 +157,16 @@ class DeleteItemView(LoginRequiredMixin, View):
 class CompleteOrderView(LoginRequiredMixin, View):
     def post(self, request, pk):
         order = get_object_or_404(Order, pk=pk)
+
+        if not order.items.exists():
+            messages.error(request, _("Your order is empty."))
+            return redirect('order-detail', pk=order.pk)
+
+
+
         order.status = "paid"
         order.save()
+            
         request.session["last_paid_order"] = order.id
         return redirect("payment-success")
 

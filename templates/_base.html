@@ -439,6 +439,82 @@ body {
 }
 
 
+
+.order-error-message {
+    background: #313637;
+    border: 2px solid #f13a11;
+    color: #f13a11;
+    border-radius: 12px;
+    padding: 18px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.order-error-message i {
+    font-size: 1.5rem;
+}
+
+
+
+.login-card { width: 100%; max-width: 420px; }
+
+.form-label-pos {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.input-pos-wrap { position: relative; display: flex; align-items: center; }
+
+.input-pos-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.form-control-pos {
+    width: 100%;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: #e5e7eb;
+    padding: 0.75rem 1rem 0.75rem 2.6rem;
+    min-height: 48px;
+    font-size: 0.92rem;
+    transition: var(--transition-base);
+}
+
+.form-control-pos::placeholder { color: #6b6e76; }
+
+.form-control-pos:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px var(--red-glow);
+}
+
+.pos-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+}
+
+.pos-check input { width: 17px; height: 17px; accent-color: var(--primary-red); cursor: pointer; }
+
+.forgot-link { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; transition: var(--transition-base); }
+.forgot-link:hover { color: var(--red-light); }
+
+
 </style>
 
 </head>
@@ -494,6 +570,10 @@ body {
 </nav>
 <div class="container-fluid py-4">
 {% block content %}{% endblock %}
+
+
+
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script>

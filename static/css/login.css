@@ -1,0 +1,211 @@
+:root {
+    --primary-red: #e63939;
+    --red-dark: #c1121f;
+    --red-light: #ff6b6b;
+    --red-glow: rgba(230, 57, 57, 0.18);
+    --surface-1: #141414;
+    --surface-2: #1c1c1c;
+    --surface-3: #242424;
+    --surface-4: #2c2c2c;
+    --border: #2a2a2a;
+    --border-light: #3a3a3a;
+    --text-muted: #9a9da5;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --shadow-soft: 0 10px 28px -10px rgba(0,0,0,0.5);
+    --transition-base: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+
+body {
+    background: var(--surface-1);
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    color: #e5e7eb;
+    min-height: 100vh;
+}
+
+.text-muted { color: var(--text-muted) !important; }
+
+/* ---------- Card (from shared system) ---------- */
+.card {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+}
+
+/* ---------- Icon circle (from shared system) ---------- */
+.icon-circle {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    transition: var(--transition-base);
+}
+
+.icon-circle i { font-size: 2.5rem; }
+.icon-circle-lg { width: 100px; height: 100px; }
+.icon-circle-lg i { font-size: 3rem; }
+
+.icon-circle-red {
+    background: radial-gradient(circle at 30% 30%, var(--red-light), var(--primary-red) 70%);
+    box-shadow: 0 0 0 8px rgba(230,57,57,0.08), 0 18px 30px -10px rgba(230,57,57,0.45);
+    color: white;
+}
+
+/* ---------- POS primary button (from shared system) ---------- */
+.btn-pos-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--primary-red);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1.5rem;
+    min-height: 48px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: var(--transition-base);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-pos-primary:hover {
+    background: var(--red-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -10px var(--red-glow);
+}
+
+.btn-pos-primary:active { transform: translateY(0); }
+
+.btn-pos-primary:focus-visible {
+    outline: 2px solid var(--primary-red);
+    outline-offset: 2px;
+}
+
+/* ---------- Page layout ---------- */
+.login-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(230,57,57,0.08), transparent 60%),
+        var(--surface-1);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--shadow-soft);
+}
+
+.login-card .card-body {
+    padding: 2.5rem 2.25rem;
+}
+
+.login-title {
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin-bottom: 0.25rem;
+}
+
+.login-subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+/* ---------- Form fields ---------- */
+.form-label-pos {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.input-pos-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-pos-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.form-control-pos {
+    width: 100%;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: #e5e7eb;
+    padding: 0.75rem 1rem 0.75rem 2.6rem;
+    min-height: 48px;
+    font-size: 0.92rem;
+    transition: var(--transition-base);
+}
+
+.form-control-pos::placeholder { color: #6b6e76; }
+
+.form-control-pos:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    background: var(--surface-3);
+    color: #e5e7eb;
+    box-shadow: 0 0 0 3px var(--red-glow);
+}
+
+/* ---------- Remember me checkbox ---------- */
+.pos-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+}
+
+.pos-check input {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--primary-red);
+    cursor: pointer;
+}
+
+.forgot-link {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+
+.forgot-link:hover { color: var(--red-light); }
+
+.login-footer-note {
+    text-align: center;
+    font-size: 0.82rem;
+    margin-top: 1.75rem;
+}
+
+.login-footer-note a {
+    color: var(--red-light);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-footer-note a:hover { color: var(--primary-red); }

@@ -1,15 +1,84 @@
+{% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{% trans "Login" %}</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">lOGIN</button>
-    </form>
+    <div class="login-shell">
+        <div class="login-card card">
+            <div class="card-body">
+
+                <h1 class="login-title">{% trans "Login" %}</h1>
+                <p class="login-subtitle">{% trans "Please enter your credentials" %}</p>
+
+                <!-- Django messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div style="color: {% if message.tags == 'error' %}#ff6b6b{% else %}#4ade80{% endif %}; 
+                                    text-align: center; margin: 1rem 0; font-weight: 500;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    <!-- Form non-field errors -->
+                    {% if form.non_field_errors %}
+                        <div style="color: #ff6b6b; text-align: center; margin-bottom: 1.5rem; font-weight: 500;">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Username -->
+                    <div style="margin-bottom: 1.25rem;">
+                        <label class="form-label-pos">{% trans "Username" %}</label>
+                        <div class="input-pos-wrap">
+                            <span class="input-pos-icon">👤</span>
+                            <input type="text" name="username" class="form-control-pos" 
+                                   placeholder="{% trans 'Username' %}" 
+                                   value="{{ form.username.value|default:'' }}" 
+                                   required autofocus>
+                        </div>
+                        {% if form.username.errors %}
+                            <div style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.3rem;">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password -->
+                    <div style="margin-bottom: 1.25rem;">
+                        <label class="form-label-pos">{% trans "Password" %}</label>
+                        <div class="input-pos-wrap">
+                            <span class="input-pos-icon">🔒</span>
+                            <input type="password" name="password" class="form-control-pos" 
+                                   placeholder="{% trans 'Password' %}" 
+                                   required>
+                        </div>
+                        {% if form.password.errors %}
+                            <div style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.3rem;">
+                                {{ form.password.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn-pos-primary">
+                        {% trans "Login" %}
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>
