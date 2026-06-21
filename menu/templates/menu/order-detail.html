@@ -112,7 +112,7 @@
 
                                     <!-- Quantity -->
                                     <span class="qty-value">
-                                        {{ item.quantity }}
+                                        {{ item.quantity|persian_number }}
                                     </span>
 
                                     <!-- Increase -->
@@ -122,7 +122,7 @@
                                     </form>
                                 </div>
                             </td>
-                            <td class="text-end price-tag fw-semibold">{{ item.subtotal }}</td>
+                            <td class="text-end price-tag fw-semibold">{{ item.subtotal|persian_number }}</td>
                             <td class="text-center">
                                 <form method="post" action="{% url 'delete-item' item.id %}">
                                     {% csrf_token %}

@@ -162,8 +162,8 @@ tbody td {
             <small>{% trans "Sales Invoice" %}</small>
         </div>
         <div class="meta">
-            <div>{% trans "Order" %}: <strong>#{{ order.id|persian_number }}</strong></div>
-            <div>{% trans "Date" %}: <strong>{{ order.created_at|date:"Y/m/d H:i"|persian_number }}</strong></div>
+            <div>{% trans "Order" %}: <strong>#{{ order.id }}</strong></div>
+            <div>{% trans "Date" %}: <strong>{{ order.created_at|to_jalali }}</strong></div>
             <div>
                 {% if order.status == "paid" %}
                     <span class="status-pill paid">{% trans "Paid" %}</span>

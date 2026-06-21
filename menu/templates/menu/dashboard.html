@@ -45,7 +45,7 @@
                             {% trans "Orders Today" %}
                         </h6>
                         <h2 class="stat-number text-white mb-0">
-                            {{ total_orders_today }}
+                            {{ total_orders_today|persian_number }}
                         </h2>
                     </div>
                     <div class="icon-badge icon-badge-gray">
@@ -85,7 +85,7 @@
                             {% trans "Open Orders" %}
                         </h6>
                         <h2 class="stat-number text-white mb-0">
-                            {{ open_orders }}
+                            {{ open_orders|persian_number }}
                         </h2>
                     </div>
                     <div class="icon-badge icon-badge-red">
@@ -179,7 +179,7 @@
 
                     <strong class="fs-5">
 
-                        {{ total_paid_orders }}
+                        {{ total_paid_orders|persian_number }}
 
                     </strong>
 
@@ -237,7 +237,7 @@
 
                             <td>
 
-                                #{{ order.id }}
+                                #{{ order.id|persian_number }}
 
                             </td>
 

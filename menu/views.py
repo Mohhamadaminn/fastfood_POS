@@ -201,7 +201,7 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
         total_sales_today = today_paid_orders.aggregate(total=Sum("total_price"))["total"] or 0
         total_orders_today = today_paid_orders.count()
-        average_order_today = today_paid_orders.aggregate(avg=Avg("total_price"))["avg"] or 0
+        average_order_today = int(today_paid_orders.aggregate(avg=Avg("total_price"))["avg"]) or 0
 
         best_seller_today = (
             Product.objects.filter(
