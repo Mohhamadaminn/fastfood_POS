@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Burger POS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-21 01:37+0330\n"
+"POT-Creation-Date: 2026-06-23 01:58+0330\n"
 "PO-Revision-Date: 2026-06-15 00:00+0330\n"
 "Last-Translator: Your Name <your@email.com>\n"
 "Language-Team: Persian\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: menu/templates/menu/dashboard.html:8 menu/templates/menu/dashboard.html:14
-#: templates/_base.html:533 templates/_base.html:535 templates/home.html:47
+#: templates/_base.html:34 templates/_base.html:36 templates/home.html:47
 msgid "Dashboard"
 msgstr "داشبورد"
 
@@ -144,7 +144,7 @@ msgstr "سفارش پرداخت شد"
 
 #: menu/templates/menu/order-detail.html:169
 #: menu/templates/menu/order-list.html:72
-#: menu/templates/menu/payment-success.html:34
+#: menu/templates/menu/payment-success.html:30
 msgid "Print Invoice"
 msgstr "چاپ فاکتور"
 
@@ -168,8 +168,8 @@ msgstr "سفارش را لغو میکنید؟"
 msgid "Cancel Order"
 msgstr "لغو سفارش"
 
-#: menu/templates/menu/order-list.html:8 templates/_base.html:537
-#: templates/_base.html:539 templates/home.html:63
+#: menu/templates/menu/order-list.html:8 templates/_base.html:38
+#: templates/_base.html:40 templates/home.html:63
 msgid "Orders"
 msgstr "سفارش‌ها"
 
@@ -202,8 +202,8 @@ msgstr "بازگشت"
 msgid "Print"
 msgstr "چاپ"
 
-#: menu/templates/menu/order-receipt.html:161 templates/_base.html:7
-#: templates/_base.html:527 templates/home.html:6
+#: menu/templates/menu/order-receipt.html:161 templates/_base.html:28
+#: templates/home.html:6
 msgid "Burger POS"
 msgstr "Burger POS"
 
@@ -245,45 +245,37 @@ msgid "Payment Successful"
 msgstr "پرداخت موفق"
 
 #: menu/templates/menu/payment-success.html:23
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| " Order #%(order_id)s has been paid successfully.\n"
-#| " "
+#, python-format
 msgid ""
-"\n"
-"                        Order #%(order_id)s has been paid successfully.\n"
-"                    "
+"Order #%(order_id)s has been paid successfully."
 msgstr ""
-"\n"
-" سفارش شماره %(order_id)s با موفقیت پرداخت شد.\n"
-" "
+"سفارش شماره %(order_id)s با موفقیت پرداخت شد."
 
-#: menu/templates/menu/payment-success.html:30
+#: menu/templates/menu/payment-success.html:34
 msgid "Back To Home Page"
 msgstr "بازگشت به صفحه اصلی"
 
-#: menu/views.py:162
+#: menu/views.py:186
 msgid "Your order is empty."
 msgstr "هنوز محصولی اضافه نکرده اید"
 
-#: templates/_base.html:542 templates/_base.html:545
+#: templates/_base.html:43 templates/_base.html:46
 msgid "Logout"
 msgstr "خروج"
 
-#: templates/_base.html:554
+#: templates/_base.html:55
 msgid "Confirm Logout"
 msgstr "تایید خروج"
 
-#: templates/_base.html:555
+#: templates/_base.html:56
 msgid "Are you sure you want to logout?"
 msgstr "آیا مطمئن هستید میخواهید خارج شوید؟"
 
-#: templates/_base.html:559
+#: templates/_base.html:60
 msgid "Yes, Logout"
 msgstr "بله، خروج"
 
-#: templates/_base.html:564
+#: templates/_base.html:65
 msgid "Cancel"
 msgstr "لغو"
 
