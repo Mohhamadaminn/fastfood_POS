@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic import TemplateView
-from django.db.models import Sum, Avg
+from django.db.models import Sum, Avg, Count
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
@@ -28,17 +28,13 @@ class HomeView(LoginRequiredMixin, TemplateView):
             created_at__date=today
         )
 
-        total_sales = (
-            paid_orders.aggregate(
-                total=Sum("total_price")
-            )["total"]
-            or 0
+        stats = paid_orders.aggregate(
+            total=Sum("total_price"),
+            count=Count("id"),
         )
 
-        total_orders = paid_orders.count()
-
-        context["total_sales"] = total_sales
-        context["total_orders"] = total_orders
+        context["total_sales"] = stats["total"] or 0
+        context["total_orders"] = stats["count"]
 
         return context
 
@@ -55,23 +51,39 @@ class OrderListView(LoginRequiredMixin, ListView):
 
     paginate_by = 20
 
+    def get_queryset(self):
+
+        return (
+            Order.objects.filter(user=self.request.user)
+            .select_related("user")
+            .order_by(*self.ordering)
+        )
+
 
 class OrderCreateView(LoginRequiredMixin, View):
     def get(self, request):
         request.session.pop("last_paid_order", None)
-        
+
         order = Order.objects.create(
             user=request.user,
             status='draft'
         )
         return redirect("order-detail", pk=order.id)
-    
+
 
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'menu/order-detail.html'
     context_object_name = 'order'
+
+    def get_queryset(self):
+        # prefetch_related collapses "N items -> N product queries" into
+        # 2 queries total. Filtering by user also closes the IDOR gap —
+        # someone can no longer view another user's order by guessing the pk.
+        return Order.objects.filter(user=self.request.user).prefetch_related(
+            "items__product"
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -82,18 +94,18 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
 class AddItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        order = get_object_or_404(Order, pk=pk)
-        
+        order = get_object_or_404(Order, pk=pk, user=request.user)
+
         if order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=order.id)
-        
+
         form = AddItemForm(request.POST)
         if form.is_valid():
             product = form.cleaned_data['product']
             quantity = form.cleaned_data['quantity']
-            
+
             item = OrderItem.objects.filter(order=order, product=product).first()
-            
+
             if item:
                 item.quantity += quantity
                 item.save()
@@ -104,19 +116,23 @@ class AddItemView(LoginRequiredMixin, View):
                     quantity=quantity,
                     unit_price=product.price,
                 )
-            
+
             if order.status == 'draft':
                 order.status = 'open'
                 order.save()
-            
+
             order.update_total_price()
             return redirect('order-detail', pk=order.pk)
-        
+
         return redirect('order-detail', pk=order.pk)
 
 class IncreaseQuantityView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        item = get_object_or_404(OrderItem, pk=pk)
+        item = get_object_or_404(
+            OrderItem.objects.select_related("order"),
+            pk=pk,
+            order__user=request.user,
+        )
         if item.order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=item.order.id)
 
@@ -128,7 +144,11 @@ class IncreaseQuantityView(LoginRequiredMixin, View):
 
 class DecreaseQuantityView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        item = get_object_or_404(OrderItem, pk=pk)
+        item = get_object_or_404(
+            OrderItem.objects.select_related("order"),
+            pk=pk,
+            order__user=request.user,
+        )
         if item.order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=item.order.id)
 
@@ -144,7 +164,11 @@ class DecreaseQuantityView(LoginRequiredMixin, View):
 
 class DeleteItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        item = get_object_or_404(OrderItem, pk=pk)
+        item = get_object_or_404(
+            OrderItem.objects.select_related("order"),
+            pk=pk,
+            order__user=request.user,
+        )
         if item.order.status in ("paid", "cancelled"):
             return redirect("order-detail", pk=item.order.id)
 
@@ -156,17 +180,15 @@ class DeleteItemView(LoginRequiredMixin, View):
 
 class CompleteOrderView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        order = get_object_or_404(Order, pk=pk)
+        order = get_object_or_404(Order, pk=pk, user=request.user)
 
         if not order.items.exists():
             messages.error(request, _("Your order is empty."))
             return redirect('order-detail', pk=order.pk)
 
-
-
         order.status = "paid"
         order.save()
-            
+
         request.session["last_paid_order"] = order.id
         return redirect("payment-success")
 
@@ -181,6 +203,13 @@ class OrderReceiptView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'menu/order-receipt.html'
     context_object_name = 'order'
+
+    def get_queryset(self):
+
+        # Scoped to the owner, same reasoning as OrderDetailView.
+        return Order.objects.filter(user=self.request.user).prefetch_related(
+            "items__product"
+        )
 
 
 class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -199,9 +228,15 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             created_at__date=today
         )
 
-        total_sales_today = today_paid_orders.aggregate(total=Sum("total_price"))["total"] or 0
-        total_orders_today = today_paid_orders.count()
-        average_order_today = int(today_paid_orders.aggregate(avg=Avg("total_price"))["avg"]) or 0
+
+        today_stats = today_paid_orders.aggregate(
+            total=Sum("total_price"),
+            count=Count("id"),
+            avg=Avg("total_price"),
+        )
+        total_sales_today = today_stats["total"] or 0
+        total_orders_today = today_stats["count"]
+        average_order_today = int(today_stats["avg"] or 0)
 
         best_seller_today = (
             Product.objects.filter(
@@ -213,12 +248,21 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             .first()
         )
 
-        all_paid_orders = Order.objects.filter(status="paid")
-        total_sales_all = all_paid_orders.aggregate(total=Sum("total_price"))["total"] or 0
-        total_paid_orders = all_paid_orders.count()
+        all_time_stats = Order.objects.filter(status="paid").aggregate(
+            total=Sum("total_price"),
+            count=Count("id"),
+        )
+        total_sales_all = all_time_stats["total"] or 0
+        total_paid_orders = all_time_stats["count"]
 
         open_orders = Order.objects.filter(status="open").count()
-        recent_orders = Order.objects.filter(status__in=['open', 'paid']).order_by("-created_at")[:5]
+
+
+        recent_orders = (
+            Order.objects.filter(status__in=["open", "paid"])
+            .select_related("user")
+            .order_by("-created_at")[:5]
+        )
 
         context.update({
             "total_sales_today": total_sales_today,
@@ -231,12 +275,12 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             "recent_orders": recent_orders,
         })
         return context
-    
+
 
 
 class CancelOrderView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        order = get_object_or_404(Order, pk=pk)
+        order = get_object_or_404(Order, pk=pk, user=request.user)
 
         if order.status == "cancelled":
             return redirect("order-detail", pk=order.id)
