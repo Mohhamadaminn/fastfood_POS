@@ -1,32 +1,30 @@
 from django.contrib import admin
-from .models import(
+from unfold.admin import ModelAdmin
+from .models import (
     Product,
     Order,
     OrderItem,
 )
-
+ 
+ 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ModelAdmin):
     pass
-
-
+ 
+ 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    
+class OrderAdmin(ModelAdmin):
     list_display = (
-        'id', 
+        'id',
         'created_at',
         'status',
         'total_price',
     )
-
     list_filter = (
         'status',
     )
-
-
-
+ 
+ 
 @admin.register(OrderItem)
-class OrderItemAdmin(admin.ModelAdmin):
+class OrderItemAdmin(ModelAdmin):
     pass
-

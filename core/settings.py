@@ -38,6 +38,7 @@ ALLOWED_HOSTS = os.environ.get(
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +50,15 @@ INSTALLED_APPS = [
     'menu',
     'django.contrib.humanize',
 ]
+
+
+# manual
+UNFOLD = {
+    "SITE_TITLE": "My Admin",
+    "SITE_HEADER": "My Project",
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
