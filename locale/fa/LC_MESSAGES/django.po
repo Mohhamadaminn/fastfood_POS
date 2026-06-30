@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Burger POS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-30 13:31+0330\n"
+"POT-Creation-Date: 2026-06-30 14:01+0330\n"
 "PO-Revision-Date: 2026-06-15 00:00+0330\n"
 "Last-Translator: Your Name <your@email.com>\n"
 "Language-Team: Persian\n"
@@ -32,6 +32,18 @@ msgstr "کاربر"
 #: accounts/models.py:11
 msgid "Users"
 msgstr "کاربرها"
+
+#: core/urls.py:24
+msgid "FastFood Administration"
+msgstr "مدیریت فست فود"
+
+#: core/urls.py:25
+msgid "Administration"
+msgstr "مدیریت"
+
+#: core/urls.py:26
+msgid "Management Dashboard"
+msgstr "داشبورد مدیریت"
 
 #: menu/apps.py:7
 msgid "Menu"
