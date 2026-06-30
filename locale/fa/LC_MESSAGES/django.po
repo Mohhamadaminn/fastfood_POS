@@ -99,8 +99,6 @@ msgid "Created at"
 msgstr "ساخته شده در"
 
 #: menu/models.py:45
-#, fuzzy
-#| msgid "Total"
 msgid "Total price"
 msgstr "مبلغ کل"
 
