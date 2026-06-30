@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Burger POS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 01:58+0330\n"
+"POT-Creation-Date: 2026-06-30 13:31+0330\n"
 "PO-Revision-Date: 2026-06-15 00:00+0330\n"
 "Last-Translator: Your Name <your@email.com>\n"
 "Language-Team: Persian\n"
@@ -16,6 +16,112 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: accounts/apps.py:7
+msgid "Accounts"
+msgstr "حساب ها"
+
+#: accounts/models.py:7
+msgid "Owner"
+msgstr "صاحب"
+
+#: accounts/models.py:10 menu/models.py:37
+msgid "User"
+msgstr "کاربر"
+
+#: accounts/models.py:11
+msgid "Users"
+msgstr "کاربرها"
+
+#: menu/apps.py:7
+msgid "Menu"
+msgstr "منو"
+
+#: menu/models.py:8
+msgid "Name"
+msgstr "نام"
+
+#: menu/models.py:9
+msgid "Price"
+msgstr "قیمت"
+
+#: menu/models.py:10
+msgid "Active"
+msgstr "فعال"
+
+#: menu/models.py:12
+msgid "Image"
+msgstr "تصویر"
+
+#: menu/models.py:19 menu/models.py:81
+msgid "Product"
+msgstr "محصول"
+
+#: menu/models.py:20 menu/templates/menu/order-detail.html:19
+msgid "Products"
+msgstr "محصولات"
+
+#: menu/models.py:29 menu/templates/menu/order-list.html:50
+msgid "Draft"
+msgstr "در انتظار تکمیل"
+
+#: menu/models.py:30 menu/templates/menu/dashboard.html:257
+#: menu/templates/menu/order-detail.html:67
+#: menu/templates/menu/order-list.html:45
+msgid "Open"
+msgstr "باز"
+
+#: menu/models.py:31 menu/templates/menu/dashboard.html:250
+#: menu/templates/menu/order-detail.html:74
+#: menu/templates/menu/order-list.html:40
+#: menu/templates/menu/order-receipt.html:169
+msgid "Paid"
+msgstr "پرداخت‌شده"
+
+#: menu/models.py:32 menu/templates/menu/order-list.html:55
+msgid "Cancelled"
+msgstr "لغو شده"
+
+#: menu/models.py:41
+msgid "Created at"
+msgstr "ساخته شده در"
+
+#: menu/models.py:45
+#, fuzzy
+#| msgid "Total"
+msgid "Total price"
+msgstr "مبلغ کل"
+
+#: menu/models.py:49 menu/templates/menu/dashboard.html:222
+#: menu/templates/menu/order-list.html:24
+msgid "Status"
+msgstr "وضعیت"
+
+#: menu/models.py:56 menu/models.py:75
+#: menu/templates/menu/order-receipt.html:165
+msgid "Order"
+msgstr "سفارش"
+
+#: menu/models.py:57 menu/templates/menu/order-list.html:8
+#: templates/_base.html:38 templates/_base.html:40 templates/home.html:63
+msgid "Orders"
+msgstr "سفارش‌ها"
+
+#: menu/models.py:85
+msgid "Quantity"
+msgstr "تعداد"
+
+#: menu/models.py:89
+msgid "Unit price"
+msgstr "قیمت محصول"
+
+#: menu/models.py:93
+msgid "Order item"
+msgstr "آیتم سفارش"
+
+#: menu/models.py:94
+msgid "Order items"
+msgstr "آیتم های سفارش"
 
 #: menu/templates/menu/dashboard.html:8 menu/templates/menu/dashboard.html:14
 #: templates/_base.html:34 templates/_base.html:36 templates/home.html:47
@@ -66,11 +172,6 @@ msgstr "سفارش‌های اخیر"
 msgid "ID"
 msgstr "شناسه"
 
-#: menu/templates/menu/dashboard.html:222
-#: menu/templates/menu/order-list.html:24
-msgid "Status"
-msgstr "وضعیت"
-
 #: menu/templates/menu/dashboard.html:224
 #: menu/templates/menu/order-detail.html:97
 #: menu/templates/menu/order-detail.html:150
@@ -85,27 +186,10 @@ msgstr "مبلغ کل"
 msgid "Date"
 msgstr "تاریخ"
 
-#: menu/templates/menu/dashboard.html:250
-#: menu/templates/menu/order-detail.html:74
-#: menu/templates/menu/order-list.html:40
-#: menu/templates/menu/order-receipt.html:169
-msgid "Paid"
-msgstr "پرداخت‌شده"
-
-#: menu/templates/menu/dashboard.html:257
-#: menu/templates/menu/order-detail.html:67
-#: menu/templates/menu/order-list.html:45
-msgid "Open"
-msgstr "باز"
-
 #: menu/templates/menu/dashboard.html:283
 #: menu/templates/menu/order-list.html:82
 msgid "No orders found."
 msgstr "هیچ سفارشی یافت نشد."
-
-#: menu/templates/menu/order-detail.html:19
-msgid "Products"
-msgstr "محصولات"
 
 #: menu/templates/menu/order-detail.html:45
 #: menu/templates/menu/order-detail.html:151
@@ -168,22 +252,9 @@ msgstr "سفارش را لغو میکنید؟"
 msgid "Cancel Order"
 msgstr "لغو سفارش"
 
-#: menu/templates/menu/order-list.html:8 templates/_base.html:38
-#: templates/_base.html:40 templates/home.html:63
-msgid "Orders"
-msgstr "سفارش‌ها"
-
 #: menu/templates/menu/order-list.html:16
 msgid "Order History"
 msgstr "تاریخچه سفارش‌ها"
-
-#: menu/templates/menu/order-list.html:50
-msgid "Draft"
-msgstr "در انتظار تکمیل"
-
-#: menu/templates/menu/order-list.html:55
-msgid "Cancelled"
-msgstr "لغو شده"
 
 #: menu/templates/menu/order-list.html:68 templates/home.html:50
 #: templates/home.html:66
@@ -210,12 +281,6 @@ msgstr "Burger POS"
 #: menu/templates/menu/order-receipt.html:162
 msgid "Sales Invoice"
 msgstr "فاکتور فروش"
-
-#: menu/templates/menu/order-receipt.html:165
-#, fuzzy
-#| msgid "Orders"
-msgid "Order"
-msgstr "سفارش‌ها"
 
 #: menu/templates/menu/order-receipt.html:171
 msgid "Unpaid"
@@ -245,17 +310,19 @@ msgid "Payment Successful"
 msgstr "پرداخت موفق"
 
 #: menu/templates/menu/payment-success.html:23
-#, python-format
+#, fuzzy, python-format
+#| msgid "Order #%(order_id)s has been paid successfully."
 msgid ""
-"Order #%(order_id)s has been paid successfully."
-msgstr ""
-"سفارش شماره %(order_id)s با موفقیت پرداخت شد."
+"\n"
+"                        Order #%(order_id)s has been paid successfully.\n"
+"                    "
+msgstr "سفارش شماره %(order_id)s با موفقیت پرداخت شد."
 
 #: menu/templates/menu/payment-success.html:34
 msgid "Back To Home Page"
 msgstr "بازگشت به صفحه اصلی"
 
-#: menu/views.py:186
+#: menu/views.py:185
 msgid "Your order is empty."
 msgstr "هنوز محصولی اضافه نکرده اید"
 

@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.utils.translation import gettext as _
+
 from datetime import date
 
 from .models import Product, Order, OrderItem
@@ -78,9 +79,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'order'
 
     def get_queryset(self):
-        # prefetch_related collapses "N items -> N product queries" into
-        # 2 queries total. Filtering by user also closes the IDOR gap —
-        # someone can no longer view another user's order by guessing the pk.
+
         return Order.objects.filter(user=self.request.user).prefetch_related(
             "items__product"
         )
