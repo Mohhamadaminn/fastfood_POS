@@ -1,4 +1,4 @@
-# Burger POS
+# FastFood POS
 
 A simple point-of-sale (POS) system built with Django for cashiers to manage in-person food orders at a fast-food counter. This is **not** a customer-facing storefront — it's an internal tool used by staff to take orders, track order status, and view sales stats.
 
